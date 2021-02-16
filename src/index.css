@@ -1,0 +1,58 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+body {
+  /* background: url(./background.png) no-repeat center center fixed; */
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-color: #d6d6e3;
+}
+.nav-top {
+  background-color: #ffffff9d;
+}
+.navbar-toggler {
+  box-shadow: none;
+}
+.navbar-toggler:focus {
+  box-shadow: none;
+  border: #46994b solid 1px;
+}
+.icon-color {
+  color: #46994b;
+}
+.bg-success,
+.btn-success {
+  background-color: #46994b;
+}
+.text-success {
+  color: #46994b;
+}
+p {
+  line-height: 1.8rem;
+}
+.service-img {
+  transition: 0.5s ease-in-out;
+}
+.service-img:hover {
+  transform: scale(1.1);
+}
+.strategy {
+  /* background: url(./images/strategy_background.jpg) no-repeat center center
+    fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; */
+  /* background-color: #9fa8b4; */
+  /* background: rgb(0, 0, 0);
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(31, 39, 50, 1) 100%
+  ); */
+}
