@@ -2,7 +2,8 @@ import React from 'react'
 import Header from './components/Header'
 import About from './screens/About'
 import Services from './screens/Services'
-import Strategies from './screens/Strategies'
+import Process from './screens/Process'
+import Works from './screens/Works'
 
 const App = () => {
   return (
@@ -11,7 +12,8 @@ const App = () => {
       <main className='my-5 py-5'>
         <About />
         <Services />
-        <Strategies />
+        <Process />
+        <Works />
       </main>
     </div>
   )

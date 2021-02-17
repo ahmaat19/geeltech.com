@@ -18,7 +18,7 @@ const Header = () => {
                 src={logo}
                 className='img-fluid'
                 alt='logo'
-                style={{ width: '80px' }}
+                style={{ width: '70px' }}
               />
             </a>
             <ul class='navbar-nav ms-auto mb-2 mb-lg-0'>
@@ -90,9 +90,9 @@ const Header = () => {
                   <a
                     class='nav-link active text-success'
                     aria-current='page'
-                    href='#strategy'
+                    href='#process'
                   >
-                    STRATEGY
+                    PROCESS
                   </a>
                 </li>
                 <li class='nav-item mx-3 '>
@@ -119,24 +119,26 @@ const Header = () => {
         </nav>
       </div>
 
-      <header className='text-center pt-5 container' id='home'>
-        <h2 className=' fw-lighter'>WELCOME TO</h2>
-        <h1
-          className='display-1 text-success fw-bold py-4'
-          style={{ letterSpacing: '30px' }}
-        >
-          GEEL TECH
-        </h1>
-        <p className='fw-lighter fs-2 pb-5 mb-5'>
-          We Offer Modern Solutions For Growing Your Business.
-        </p>
+      <header id='home' className='pt-5'>
+        <div className='text-center pt-5 container'>
+          <h2 className=' fw-lighter'>WELCOME TO</h2>
+          <h1
+            className='display-1 text-success fw-bold py-4'
+            style={{ letterSpacing: '30px' }}
+          >
+            GEEL TECH
+          </h1>
+          <p className='fw-lighter fs-2 pb-5 mb-5'>
+            We Offer Modern Solutions For Growing Your Business.
+          </p>
 
-        <a
-          href='#about'
-          className='btn btn-success py-3 px-5 rounded-pill shadow'
-        >
-          GET STARTED <FaArrowAltCircleRight />
-        </a>
+          <a
+            href='#about'
+            className='btn btn-success py-3 px-5 rounded-pill shadow'
+          >
+            GET STARTED <FaArrowAltCircleRight />
+          </a>
+        </div>
       </header>
     </>
   )

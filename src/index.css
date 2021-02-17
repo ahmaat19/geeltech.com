@@ -13,7 +13,7 @@ body {
   background-color: #d6d6e3;
 }
 .nav-top {
-  background-color: #ffffff9d;
+  background-color: #ffffffd7;
 }
 .navbar-toggler {
   box-shadow: none;
@@ -41,18 +41,16 @@ p {
 .service-img:hover {
   transform: scale(1.1);
 }
-.strategy {
-  /* background: url(./images/strategy_background.jpg) no-repeat center center
-    fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover; */
-  /* background-color: #9fa8b4; */
-  /* background: rgb(0, 0, 0);
-  background: radial-gradient(
-    circle,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(31, 39, 50, 1) 100%
-  ); */
+
+.work-link:hover {
+  color: #fff !important;
+}
+.card {
+  overflow: hidden;
+}
+.work-img {
+  transition: 0.5s ease-in-out;
+}
+.work-img:hover {
+  transform: scale(1.05);
 }
