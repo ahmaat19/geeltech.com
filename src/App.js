@@ -4,6 +4,8 @@ import About from './screens/About'
 import Services from './screens/Services'
 import Process from './screens/Process'
 import Works from './screens/Works'
+import Contact from './screens/Contact'
+import Footer from './components/Footer'
 
 const App = () => {
   return (
@@ -14,7 +16,9 @@ const App = () => {
         <Services />
         <Process />
         <Works />
+        <Contact />
       </main>
+      <Footer />
     </div>
   )
 }

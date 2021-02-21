@@ -1,19 +1,14 @@
 import React from 'react'
-import {
-  FaArrowAltCircleRight,
-  FaEnvelope,
-  FaPhoneAlt,
-  FaSignInAlt,
-} from 'react-icons/fa'
+import { FaArrowAltCircleRight, FaEnvelope, FaPhoneAlt } from 'react-icons/fa'
 import logo from '../logo.png'
 
 const Header = () => {
   return (
     <>
       <div className='sticky-top nav-top'>
-        <nav class='navbar navbar-expand-sm navbar-light bg-transparent'>
+        <nav class='navbar navbar-expand-lg navbar-light bg-transparent'>
           <div class='container'>
-            <a class='navbar-brand' href='#'>
+            <a class='navbar-brand' href='#home'>
               <img
                 src={logo}
                 className='img-fluid'
@@ -21,31 +16,6 @@ const Header = () => {
                 style={{ width: '70px' }}
               />
             </a>
-            <ul class='navbar-nav ms-auto mb-2 mb-lg-0'>
-              <li class='nav-item'>
-                <a
-                  class='nav-link '
-                  aria-current='page'
-                  href='tel:+252615301507'
-                >
-                  <FaPhoneAlt className='icon-color' /> +252 61 530 1507
-                </a>
-              </li>
-              <li class='nav-item'>
-                <a
-                  class='nav-link '
-                  aria-current='page'
-                  href='mailto:info@geeltech.com'
-                >
-                  <FaEnvelope className='icon-color' /> info@geeltech.com
-                </a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-
-        <nav class='navbar navbar-expand-md navbar-light bg-transparent'>
-          <div class='container'>
             <button
               class='navbar-toggler'
               type='button'
@@ -58,59 +28,68 @@ const Header = () => {
               <span class='navbar-toggler-icon'></span>
             </button>
             <div class='collapse navbar-collapse' id='navbarSupportedContent'>
-              <ul class='navbar-nav m-auto mb-2 mb-lg-0'>
-                <li class='nav-item mx-3 '>
+              <ul class='navbar-nav ms-auto mb-2 mb-lg-0'>
+                <li class='nav-item '>
                   <a
                     class='nav-link active text-success'
                     aria-current='page'
                     href='#home'
                   >
-                    HOME
+                    Home
                   </a>
                 </li>
-                <li class='nav-item mx-3 '>
+                <li class='nav-item '>
                   <a
                     class='nav-link active text-success'
                     aria-current='page'
                     href='#about'
                   >
-                    ABOUT
+                    About
                   </a>
                 </li>
-                <li class='nav-item mx-3 '>
+                <li class='nav-item '>
                   <a
                     class='nav-link active text-success'
                     aria-current='page'
                     href='#services'
                   >
-                    SERVICES
+                    Services
                   </a>
                 </li>
-                <li class='nav-item mx-3 '>
+                <li class='nav-item '>
                   <a
                     class='nav-link active text-success'
                     aria-current='page'
                     href='#process'
                   >
-                    PROCESS
+                    Process
                   </a>
                 </li>
-                <li class='nav-item mx-3 '>
+                <li class='nav-item '>
                   <a
                     class='nav-link active text-success'
                     aria-current='page'
                     href='#works'
                   >
-                    WORKS
+                    Works
                   </a>
                 </li>
-                <li class='nav-item mx-3 '>
+                <li class='nav-item '>
                   <a
                     class='nav-link active text-success'
                     aria-current='page'
                     href='#contact'
                   >
-                    CONTACT US
+                    Contact Us
+                  </a>
+                </li>
+                <li class='nav-item'>
+                  <a
+                    class='nav-link  btn btn-light rounded-pill shadow '
+                    aria-current='page'
+                    href='tel:+252615301507'
+                  >
+                    <FaPhoneAlt className='icon-color' /> +252 61 530 1507
                   </a>
                 </li>
               </ul>

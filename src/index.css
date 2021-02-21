@@ -13,7 +13,7 @@ body {
   background-color: #d6d6e3;
 }
 .nav-top {
-  background-color: #ffffffd7;
+  background-color: #ffffff;
 }
 .navbar-toggler {
   box-shadow: none;
@@ -53,4 +53,17 @@ p {
 }
 .work-img:hover {
   transform: scale(1.05);
+}
+
+.contact-icon {
+  font-size: 300%;
+  transition: 0.5s ease-in-out;
+}
+
+.contact-icon:hover {
+  transform: scale(1.07);
+}
+.contact-us-links {
+  text-decoration: none;
+  color: #111;
 }

@@ -35,6 +35,15 @@ const Works = () => {
                     aria-current='page'
                     href=''
                   >
+                    Web App
+                  </a>
+                </li>
+                <li class='nav-item mx-3 '>
+                  <a
+                    class='nav-link active text-success work-link'
+                    aria-current='page'
+                    href=''
+                  >
                     Branding
                   </a>
                 </li>
