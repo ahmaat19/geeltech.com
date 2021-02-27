@@ -7,40 +7,43 @@ const Works = () => {
         <h2 className='fw-bold'>
           Our Recent <span className='text-success'>Works</span>{' '}
         </h2>
-        <nav class='navbar navbar-expand-sm navbar-light bg-transparent'>
-          <div class='container'>
-            <div class='collapse navbar-collapse' id='navbarSupportedContent'>
-              <ul class='navbar-nav m-auto mb-2 mb-lg-0'>
-                <li class='nav-item mx-3 '>
+        <nav className='navbar navbar-expand-sm navbar-light bg-transparent'>
+          <div className='container'>
+            <div
+              className='collapse navbar-collapse'
+              id='navbarSupportedContent'
+            >
+              <ul className='navbar-nav m-auto mb-2 mb-lg-0'>
+                <li className='nav-item mx-3 '>
                   <a
-                    class='nav-link active text-success work-link'
+                    className='nav-link active text-success work-link'
                     aria-current='page'
                     href=''
                   >
                     All
                   </a>
                 </li>
-                <li class='nav-item mx-3 '>
+                <li className='nav-item mx-3 '>
                   <a
-                    class='nav-link active text-success work-link'
+                    className='nav-link active text-success work-link'
                     aria-current='page'
                     href=''
                   >
                     Web Design
                   </a>
                 </li>
-                <li class='nav-item mx-3 '>
+                <li className='nav-item mx-3 '>
                   <a
-                    class='nav-link active text-success work-link'
+                    className='nav-link active text-success work-link'
                     aria-current='page'
                     href=''
                   >
                     Web App
                   </a>
                 </li>
-                <li class='nav-item mx-3 '>
+                <li className='nav-item mx-3 '>
                   <a
-                    class='nav-link active text-success work-link'
+                    className='nav-link active text-success work-link'
                     aria-current='page'
                     href=''
                   >

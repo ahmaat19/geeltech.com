@@ -1,3 +1,22 @@
+main {
+  min-height: 80vh;
+}
+
+.bg-dark {
+  background-color: #46994b !important;
+}
+.nav-link {
+  color: #fff !important;
+}
+.nav-link:hover {
+  color: rgba(255, 255, 255, 0.692) !important;
+}
+
+.brand-logo {
+  -webkit-filter: brightness(0) invert(1);
+  width: 50px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -23,7 +42,7 @@ body {
   border: #46994b solid 1px;
 }
 .icon-color {
-  color: #46994b;
+  color: #fcfcfc;
 }
 .bg-success,
 .btn-success {
@@ -42,8 +61,12 @@ p {
   transform: scale(1.1);
 }
 
+.work-link {
+  color: #111;
+}
+
 .work-link:hover {
-  color: #fff !important;
+  color: #46994b !important;
 }
 .card {
   overflow: hidden;
