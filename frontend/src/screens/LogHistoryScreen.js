@@ -2,45 +2,67 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { getLogHistory } from '../actions/userActions'
-import ReactPaginate from 'react-paginate'
+import { getUserLogHistory } from '../redux/users/usersThunk'
 import Moment from 'react-moment'
 import moment from 'moment'
+import Pagination from '../components/Pagination'
 
 const UserLogHistoryScreen = () => {
+  const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState(30)
+  const [search, setSearch] = useState('')
+
   const dispatch = useDispatch()
 
   const userLogHistory = useSelector((state) => state.userLogHistory)
-  const { loading, error, logHistory } = userLogHistory
+  const {
+    loadingLogHistory,
+    errorLogHistory,
+    logHistory,
+    total,
+    pages,
+  } = userLogHistory
 
   useEffect(() => {
-    dispatch(getLogHistory())
-  }, [dispatch])
-
-  const [currentPage, setCurrentPage] = useState(1)
-
-  const itemsPerPage = 10
-  const indexOfLastItem = currentPage * itemsPerPage
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage
-  const currentItems =
-    logHistory && logHistory.slice(indexOfFirstItem, indexOfLastItem)
-  const totalItems = logHistory && Math.ceil(logHistory.length / itemsPerPage)
+    search.trim()
+      ? dispatch(getUserLogHistory({ page, limit: total }))
+      : dispatch(getUserLogHistory({ page, limit }))
+  }, [dispatch, page, limit, search, total])
 
   return (
     <>
-      <h1>Users Login History</h1>
+      <h3 className=''>Users Log</h3>
 
-      {loading ? (
+      <input
+        type='text'
+        className='form-control text-info '
+        placeholder='Search by Email or Name'
+        name='search'
+        value={search}
+        onChange={(e) => setSearch(e.target.value.toLowerCase())}
+        autoFocus
+        required
+      />
+
+      {loadingLogHistory ? (
         <Loader />
-      ) : error ? (
-        <Message variant='danger'>{error}</Message>
+      ) : errorLogHistory ? (
+        <Message variant='danger'>{errorLogHistory}</Message>
       ) : (
         <>
+          <div className='d-flex justify-content-center mt-2'>
+            <Pagination
+              setPage={setPage}
+              page={page}
+              pages={pages}
+              limit={limit}
+              setLimit={setLimit}
+              total={total}
+            />
+          </div>
           <div className='table-responsive'>
-            <table className='table table-sm hover bordered striped caption-top'>
-              <caption>
-                {logHistory && logHistory.length} records were found
-              </caption>
+            <table className='table table-sm hover bordered striped caption-top '>
+              <caption>{total} records were found</caption>
               <thead>
                 <tr>
                   <th>LOG ID</th>
@@ -51,53 +73,45 @@ const UserLogHistoryScreen = () => {
                 </tr>
               </thead>
               <tbody>
-                {currentItems &&
-                  currentItems.map((log) => (
-                    <tr key={log._id}>
-                      <td>{log._id}</td>
-                      <td>{log.user.name}</td>
-                      <td>
-                        <a href={`mailto:${log.user.email}`}>
-                          {log.user.email}
-                        </a>
-                      </td>
-                      <td>
-                        <Moment format='YYYY-MM-DD'>
-                          {moment(log.logDate)}
-                        </Moment>
-                      </td>
-                      <td>
-                        <Moment format='HH:mm:ss'>{moment(log.logDate)}</Moment>
-                      </td>
-                    </tr>
-                  ))}
+                {logHistory &&
+                  logHistory.map(
+                    (log) =>
+                      log.user &&
+                      log.user.email.includes(search.trim()) && (
+                        <tr key={log._id}>
+                          <td>{log._id}</td>
+                          <td>{log.user && log.user.name}</td>
+                          <td>
+                            <a href={`mailto:${log.user && log.user.email}`}>
+                              {log.user && log.user.email}
+                            </a>
+                          </td>
+                          <td>
+                            <Moment format='YYYY-MM-DD'>
+                              {moment(log.logDate)}
+                            </Moment>
+                          </td>
+                          <td>
+                            <Moment format='HH:mm:ss'>
+                              {moment(log.logDate)}
+                            </Moment>
+                          </td>
+                        </tr>
+                      )
+                  )}
               </tbody>
             </table>
           </div>
-          {logHistory && logHistory.length > itemsPerPage && (
-            <div className='d-flex justify-content-center'>
-              <ReactPaginate
-                previousLabel='previous'
-                previousClassName='page-item'
-                previousLinkClassName='page-link'
-                nextLabel='next'
-                nextClassName='page-item'
-                nextLinkClassName='page-link'
-                pageClassName='page-item'
-                pageLinkClassName='page-link'
-                activeClassName='page-item active'
-                activeLinkClassName={'page-link'}
-                breakLabel={'...'}
-                breakClassName={'page-item'}
-                breakLinkClassName={'page-link'}
-                pageCount={totalItems && totalItems}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={2}
-                onPageChange={(e) => setCurrentPage(e.selected + 1)}
-                containerClassName={'page pagination'}
-              />
-            </div>
-          )}
+          <div className='d-flex justify-content-center'>
+            <Pagination
+              setPage={setPage}
+              page={page}
+              pages={pages}
+              limit={limit}
+              setLimit={setLimit}
+              total={total}
+            />
+          </div>
         </>
       )}
     </>

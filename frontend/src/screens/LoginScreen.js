@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { login } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
+import { login } from '../redux/users/usersThunk'
+import { resetLoginState } from '../redux/users/usersSlice'
 
 const LoginScreen = ({ history }) => {
   const [email, setEmail] = useState('')
@@ -12,7 +13,15 @@ const LoginScreen = ({ history }) => {
 
   const dispatch = useDispatch()
   const userLogin = useSelector((state) => state.userLogin)
-  const { loading, error, userInfo } = userLogin
+  const { loadingLogin, errorLogin, userInfo } = userLogin
+
+  useEffect(() => {
+    if (errorLogin) {
+      setTimeout(() => {
+        dispatch(resetLoginState())
+      }, 5000)
+    }
+  }, [dispatch, errorLogin])
 
   useEffect(() => {
     userInfo && history.push('/')
@@ -20,13 +29,13 @@ const LoginScreen = ({ history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(login(email, password))
+    dispatch(login({ email, password }))
   }
   return (
     <FormContainer>
-      <h1>Sign In</h1>
-      {error && <Message variant='danger'>{error}</Message>}
-      {loading && <Loader></Loader>}
+      <h3 className=''>Sign In</h3>
+      {errorLogin && <Message variant='danger'>{errorLogin}</Message>}
+      {loadingLogin && <Loader></Loader>}
 
       <form onSubmit={submitHandler}>
         <div className='form-group'>
@@ -36,6 +45,7 @@ const LoginScreen = ({ history }) => {
             className='form-control'
             placeholder='Enter email'
             value={email}
+            autoFocus
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
@@ -51,7 +61,7 @@ const LoginScreen = ({ history }) => {
           />
         </div>
 
-        <button type='submit' className='btn btn-info btn-sm'>
+        <button type='submit' className='btn btn-light btn-sm'>
           Sign In
         </button>
       </form>

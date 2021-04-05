@@ -1,27 +1,42 @@
-import { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { CLEAR_ALERTS } from '../constants/userConstants'
+import { useEffect, useState } from 'react'
+import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa'
 
 const Message = ({ variant, children }) => {
   const [alert, setAlert] = useState(true)
-  const dispatch = useDispatch()
 
   useEffect(() => {
     const timeId = setTimeout(() => {
       setAlert(false)
-      dispatch({ type: CLEAR_ALERTS })
-    }, 4000)
+    }, 5000)
 
     return () => {
       clearTimeout(timeId)
     }
-  }, [dispatch])
+  }, [alert])
 
-  return alert && <div className={`alert alert-${variant}`}>{children}</div>
-}
-
-Message.defaultPros = {
-  variant: 'info',
+  return (
+    alert && (
+      <div
+        className='position-fixed top-0 end-0 p-2 animate__animated animate__lightSpeedInRight '
+        style={{ zIndex: 50000 }}
+      >
+        <div
+          className={`toast show text-${variant}`}
+          role='alert'
+          style={{ width: 'fit-content' }}
+        >
+          <div className='toast-body text-center '>
+            {variant === 'success' ? (
+              <FaCheckCircle className='fs-4 mr-3' />
+            ) : (
+              <FaTimesCircle className='fs-4 mr-3' />
+            )}
+            {children}
+          </div>
+        </div>
+      </div>
+    )
+  )
 }
 
 export default Message

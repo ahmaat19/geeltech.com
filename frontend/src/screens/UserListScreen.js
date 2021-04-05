@@ -9,16 +9,24 @@ import {
   FaTimesCircle,
   FaTrash,
 } from 'react-icons/fa'
+
 import {
-  listUsers,
+  resetDeleteUser,
+  resetListUsers,
+  resetUpdateUser,
+} from '../redux/users/usersSlice'
+import {
   deleteUser,
+  listUsers,
   updateUser,
-  register,
-} from '../actions/userActions'
-import Pagination from '../components/Pagination'
+  registerUser,
+} from '../redux/users/usersThunk'
+
+import { UnlockAccess } from '../components/UnlockAccess'
 
 import { confirmAlert } from 'react-confirm-alert'
 import { Confirm } from '../components/Confirm'
+import Pagination from '../components/Pagination'
 
 const UserListScreen = () => {
   const [id, setId] = useState(null)
@@ -26,50 +34,88 @@ const UserListScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [isAdmin, setIsAdmin] = useState(false)
+  const [adminRole, setAdminRole] = useState(false)
+  const [userRole, setUserRole] = useState(false)
   const [message, setMessage] = useState('')
   const [edit, setEdit] = useState(false)
+
+  const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState(30)
 
   const dispatch = useDispatch()
 
   const userList = useSelector((state) => state.userList)
-  const { loading, error, users } = userList
+  const { users, loadingListUsers, errorListUsers, total, pages } = userList
+
+  const userUpdate = useSelector((state) => state.userUpdate)
+  const { loadingUpdateUser, errorUpdateUser, successUpdateUser } = userUpdate
 
   const userDelete = useSelector((state) => state.userDelete)
-  const { success: successDelete, error: errorDelete } = userDelete
+  const { successDeleteUser, errorDeleteUser } = userDelete
 
   const userRegister = useSelector((state) => state.userRegister)
   const {
-    loading: loadingCreateRegister,
-    error: errorCreateRegister,
-    success: successCreateRegister,
+    loadingRegisterUser,
+    errorRegisterUser,
+    successRegisterUser,
   } = userRegister
-
-  const userUpdate = useSelector((state) => state.userUpdate)
-  const {
-    loading: loadingUpdate,
-    error: errorUpdate,
-    success: successUpdate,
-  } = userUpdate
 
   const formCleanHandler = () => {
     setName('')
     setEmail('')
     setPassword('')
+    setAdminRole(false)
+    setUserRole(false)
     setConfirmPassword('')
     setEdit(false)
   }
 
   useEffect(() => {
-    dispatch(listUsers())
-    if (successUpdate || successCreateRegister) {
+    if (
+      errorDeleteUser ||
+      errorRegisterUser ||
+      errorListUsers ||
+      errorUpdateUser ||
+      successDeleteUser ||
+      successRegisterUser ||
+      successUpdateUser
+    ) {
+      setTimeout(() => {
+        dispatch(resetDeleteUser())
+        dispatch(resetListUsers())
+        dispatch(resetUpdateUser())
+      }, 5000)
+    }
+  }, [
+    errorDeleteUser,
+    errorRegisterUser,
+    errorListUsers,
+    errorUpdateUser,
+    successDeleteUser,
+    successRegisterUser,
+    successUpdateUser,
+    dispatch,
+  ])
+
+  useEffect(() => {
+    dispatch(listUsers({ page, limit }))
+    if (successUpdateUser || successRegisterUser) {
       formCleanHandler()
     }
-  }, [dispatch, successDelete, successUpdate, successCreateRegister])
+  }, [
+    dispatch,
+    successDeleteUser,
+    successUpdateUser,
+    successRegisterUser,
+    page,
+    limit,
+  ])
 
   const deleteHandler = (id) => {
     confirmAlert(Confirm(() => dispatch(deleteUser(id))))
   }
+
+  const roles = { admin: adminRole, user: userRole }
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -78,27 +124,25 @@ const UserListScreen = () => {
       setMessage('Password do not match')
     } else {
       edit
-        ? dispatch(updateUser({ _id: id, name, email, password, isAdmin }))
-        : dispatch(register(name, email, password))
+        ? dispatch(updateUser({ _id: id, name, email, password, roles }))
+        : dispatch(registerUser({ name, email, password, roles }))
     }
   }
 
   const editHandler = (user) => {
     setName(user.name)
     setEmail(user.email)
-    setIsAdmin(user.isAdmin)
     setPassword('')
     setId(user._id)
     setEdit(true)
+
+    user &&
+      user.roles.map(
+        (role) =>
+          (role === 'Admin' && setAdminRole(true)) ||
+          (role === 'User' && setUserRole(true))
+      )
   }
-
-  const [currentPage, setCurrentPage] = useState(1)
-
-  const itemsPerPage = 5
-  const indexOfLastItem = currentPage * itemsPerPage
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage
-  const currentItems = users && users.slice(indexOfFirstItem, indexOfLastItem)
-  const totalItems = users && Math.ceil(users.length / itemsPerPage)
 
   return (
     <>
@@ -114,9 +158,9 @@ const UserListScreen = () => {
         <div className='modal-dialog'>
           <div className='modal-content modal-background'>
             <div className='modal-header'>
-              <h5 className='modal-title' id='editUserModalLabel'>
-                Edit User
-              </h5>
+              <h3 className='modal-title ' id='editUserModalLabel'>
+                {edit ? 'Edit User' : 'Add User'}
+              </h3>
               <button
                 type='button'
                 className='btn-close'
@@ -127,27 +171,29 @@ const UserListScreen = () => {
             </div>
             <div className='modal-body'>
               {message && <Message variant='danger'>{message}</Message>}
-              {successUpdate && (
+              {successUpdateUser && (
                 <Message variant='success'>
                   User has been updated successfully.
                 </Message>
               )}
-              {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
-              {loadingUpdate && <Loader />}
-              {successCreateRegister && (
+              {errorUpdateUser && (
+                <Message variant='danger'>{errorUpdateUser}</Message>
+              )}
+              {loadingUpdateUser && <Loader />}
+              {successRegisterUser && (
                 <Message variant='success'>
                   User has been Created successfully.
                 </Message>
               )}
-              {errorCreateRegister && (
-                <Message variant='danger'>{errorCreateRegister}</Message>
+              {errorRegisterUser && (
+                <Message variant='danger'>{errorRegisterUser}</Message>
               )}
-              {loadingCreateRegister && <Loader />}
+              {loadingRegisterUser && <Loader />}
 
-              {loading ? (
+              {loadingListUsers ? (
                 <Loader />
-              ) : error ? (
-                <Message variant='danger'>{error}</Message>
+              ) : errorListUsers ? (
+                <Message variant='danger'>{errorListUsers}</Message>
               ) : (
                 <form onSubmit={submitHandler}>
                   <div className='form-group'>
@@ -193,17 +239,39 @@ const UserListScreen = () => {
                     />
                   </div>
 
-                  <div className='form-group'>
-                    <input
-                      type='checkbox'
-                      id='isAdmin'
-                      label='Is Admin'
-                      checked={isAdmin}
-                      onChange={(e) => setIsAdmin(e.target.checked)}
-                    />{' '}
-                    <label htmlFor='isAdmin' id='isAdmin'>
-                      Admin?
-                    </label>
+                  <div className='row'>
+                    <div className='col'>
+                      <div className='form-check'>
+                        <input
+                          className='form-check-input'
+                          type='checkbox'
+                          value='Admin'
+                          id='admin'
+                          name='admin'
+                          checked={adminRole}
+                          onChange={(e) => setAdminRole(e.target.checked)}
+                        />
+                        <label className='form-check-label' htmlFor='admin'>
+                          Admin
+                        </label>
+                      </div>
+                    </div>
+                    <div className='col'>
+                      <div className='form-check'>
+                        <input
+                          className='form-check-input'
+                          type='checkbox'
+                          value='User'
+                          id='user'
+                          name='user'
+                          checked={userRole}
+                          onChange={(e) => setUserRole(e.target.checked)}
+                        />
+                        <label className='form-check-label' htmlFor='user'>
+                          User
+                        </label>
+                      </div>
+                    </div>
                   </div>
 
                   <div className='modal-footer'>
@@ -215,7 +283,7 @@ const UserListScreen = () => {
                     >
                       Close
                     </button>
-                    <button type='submit' className='btn btn-primary btn-sm'>
+                    <button type='submit' className='btn btn-light btn-sm'>
                       Update
                     </button>
                   </div>
@@ -227,7 +295,7 @@ const UserListScreen = () => {
       </div>
 
       <div className='d-flex justify-content-between align-items-center'>
-        <h1>Users</h1>
+        <h3 className=''>Users</h3>
         <button
           className='btn btn-light btn-sm'
           data-bs-toggle='modal'
@@ -237,19 +305,29 @@ const UserListScreen = () => {
         </button>
       </div>
 
-      {successDelete && (
+      {successDeleteUser && (
         <Message variant='success'>User has been deleted successfully.</Message>
       )}
-      {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
-      {loading ? (
+      {errorDeleteUser && <Message variant='danger'>{errorDeleteUser}</Message>}
+      {loadingListUsers ? (
         <Loader />
-      ) : error ? (
-        <Message variant='danger'>{error}</Message>
+      ) : errorListUsers ? (
+        <Message variant='danger'>{errorListUsers}</Message>
       ) : (
         <>
-          <div className='table-responsive'>
-            <table className='table table-sm hover bordered striped caption-top'>
-              <caption>{users && users.length} records were found</caption>
+          <div className='d-flex justify-content-center mt-2'>
+            <Pagination
+              setPage={setPage}
+              page={page}
+              pages={pages}
+              limit={limit}
+              setLimit={setLimit}
+              total={total}
+            />
+          </div>
+          <div className='table-responsive '>
+            <table className='table table-sm hover bordered striped caption-top '>
+              <caption>{total} records were found</caption>
               <thead>
                 <tr>
                   <th>ID</th>
@@ -260,48 +338,51 @@ const UserListScreen = () => {
                 </tr>
               </thead>
               <tbody>
-                {currentItems.map((user) => (
-                  <tr key={user._id}>
-                    <td>{user._id}</td>
-                    <td>{user.name}</td>
-                    <td>
-                      <a href={`mailto:${user.email}`}>{user.email}</a>
-                    </td>
-                    <td>
-                      {user.isAdmin ? (
-                        <FaCheckCircle className='text-success' />
-                      ) : (
-                        <FaTimesCircle className='text-danger' />
-                      )}
-                    </td>
-                    <td className='btn-group'>
-                      <button
-                        className='btn btn-light btn-sm'
-                        onClick={(e) => editHandler(user)}
-                        data-bs-toggle='modal'
-                        data-bs-target='#editUserModal'
-                      >
-                        <FaEdit /> Edit
-                      </button>
+                {users &&
+                  users.map((user) => (
+                    <tr key={user._id}>
+                      <td>{user._id}</td>
+                      <td>{user.name}</td>
+                      <td>
+                        <a href={`mailto:${user.email}`}>{user.email}</a>
+                      </td>
+                      <td>
+                        {UnlockAccess(user && user.roles) ? (
+                          <FaCheckCircle className='text-success' />
+                        ) : (
+                          <FaTimesCircle className='text-danger' />
+                        )}
+                      </td>
+                      <td className='btn-group'>
+                        <button
+                          className='btn btn-light btn-sm'
+                          onClick={() => editHandler(user)}
+                          data-bs-toggle='modal'
+                          data-bs-target='#editUserModal'
+                        >
+                          <FaEdit /> Edit
+                        </button>
 
-                      <button
-                        className='btn btn-danger btn-sm'
-                        onClick={() => deleteHandler(user._id)}
-                      >
-                        <FaTrash /> Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                        <button
+                          className='btn btn-danger btn-sm'
+                          onClick={() => deleteHandler(user._id)}
+                        >
+                          <FaTrash /> Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
           <div className='d-flex justify-content-center'>
             <Pagination
-              setCurrentPage={setCurrentPage}
-              totalItems={totalItems}
-              arrayLength={users && users.length}
-              itemsPerPage={itemsPerPage}
+              setPage={setPage}
+              page={page}
+              pages={pages}
+              limit={limit}
+              setLimit={setLimit}
+              total={total}
             />
           </div>
         </>

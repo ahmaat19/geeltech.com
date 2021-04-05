@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import { resetPassword } from '../actions/userActions'
+import { resetResetPassword } from '../redux/users/usersSlice'
 
-const ResetPasswordScreen = ({ location, history, match }) => {
+import { resetPassword } from '../redux/users/usersThunk'
+
+const ResetPasswordScreen = ({ history, match }) => {
   const resetToken = match.params.resetToken
 
   const [password, setPassword] = useState('')
@@ -15,24 +16,37 @@ const ResetPasswordScreen = ({ location, history, match }) => {
 
   const dispatch = useDispatch()
   const userResetPassword = useSelector((state) => state.userResetPassword)
-  const { loading, error, success, message: successMessage } = userResetPassword
+  const {
+    loadingResetPassword,
+    errorResetPassword,
+    successResetPassword,
+    message: successMessage,
+  } = userResetPassword
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
   useEffect(() => {
+    if (errorResetPassword || successResetPassword) {
+      setTimeout(() => {
+        dispatch(resetResetPassword())
+      }, 5000)
+    }
+  }, [dispatch, errorResetPassword, successResetPassword])
+
+  useEffect(() => {
     if (userInfo) {
       history.push('/')
     }
-  }, [])
+  }, [history, userInfo])
 
   useEffect(() => {
-    if (success) {
+    if (successResetPassword) {
       setPassword('')
       setConfirmPassword('')
       history.push('/login')
     }
-  }, [success])
+  }, [successResetPassword, history])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -45,11 +59,15 @@ const ResetPasswordScreen = ({ location, history, match }) => {
 
   return (
     <FormContainer>
-      <h3>Reset Password</h3>
-      {success && <Message variant='success'>{successMessage}</Message>}
+      <h3 className=''>Reset Password</h3>
+      {successResetPassword && (
+        <Message variant='success'>{successMessage}</Message>
+      )}
       {message && <Message variant='danger'>{message}</Message>}
-      {error && <Message variant='danger'>{error}</Message>}
-      {loading && <Loader></Loader>}
+      {errorResetPassword && (
+        <Message variant='danger'>{errorResetPassword}</Message>
+      )}
+      {loadingResetPassword && <Loader></Loader>}
       <form onSubmit={submitHandler}>
         <div className='form-group'>
           <label htmlFor='password'>Password</label>
@@ -60,6 +78,7 @@ const ResetPasswordScreen = ({ location, history, match }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            autoFocus
           />
         </div>
         <div className='form-group'>
@@ -73,7 +92,7 @@ const ResetPasswordScreen = ({ location, history, match }) => {
             required
           />
         </div>
-        <button type='submit' className='btn btn-info btn-sm'>
+        <button type='submit' className='btn btn-light btn-sm'>
           Change
         </button>
       </form>

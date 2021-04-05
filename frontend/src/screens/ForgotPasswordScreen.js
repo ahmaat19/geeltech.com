@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import { forgotPassword } from '../actions/userActions'
+import { resetForgotPassword } from '../redux/users/usersSlice'
+import { forgotPassword } from '../redux/users/usersThunk'
 
-const ForgotPasswordScreen = ({ location, history }) => {
+const ForgotPasswordScreen = ({ history }) => {
   const [email, setEmail] = useState('')
 
   const dispatch = useDispatch()
   const userForgotPassword = useSelector((state) => state.userForgotPassword)
   const {
-    loading,
-    error,
-    success,
+    loadingForgotPassword,
+    errorForgotPassword,
+    successForgotPassword,
     message: successMessage,
   } = userForgotPassword
 
@@ -22,16 +22,24 @@ const ForgotPasswordScreen = ({ location, history }) => {
   const { userInfo } = userLogin
 
   useEffect(() => {
+    if (errorForgotPassword || successForgotPassword) {
+      setTimeout(() => {
+        dispatch(resetForgotPassword())
+      }, 5000)
+    }
+  }, [dispatch, errorForgotPassword, successForgotPassword])
+
+  useEffect(() => {
     if (userInfo) {
       history.push('/')
     }
-  }, [])
+  }, [history, userInfo])
 
   useEffect(() => {
-    if (success) {
+    if (successForgotPassword) {
       setEmail('')
     }
-  }, [success])
+  }, [successForgotPassword])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -39,10 +47,14 @@ const ForgotPasswordScreen = ({ location, history }) => {
   }
   return (
     <FormContainer>
-      <h4>Forgot Password</h4>
-      {success && <Message variant='success'>{successMessage}</Message>}
-      {error && <Message variant='danger'>{error}</Message>}
-      {loading && <Loader></Loader>}
+      <h3 className=''>Forgot Password</h3>
+      {successForgotPassword && (
+        <Message variant='success'>{successMessage}</Message>
+      )}
+      {errorForgotPassword && (
+        <Message variant='danger'>{errorForgotPassword}</Message>
+      )}
+      {loadingForgotPassword && <Loader></Loader>}
       <form onSubmit={submitHandler}>
         <div className='form-group'>
           <label htmlFor='email'>Email Address</label>
@@ -53,10 +65,11 @@ const ForgotPasswordScreen = ({ location, history }) => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            autoFocus
           />
         </div>
 
-        <button type='submit' className='btn btn-info btn-sm'>
+        <button type='submit' className='btn btn-light btn-sm'>
           Send
         </button>
       </form>

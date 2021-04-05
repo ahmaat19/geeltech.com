@@ -1,7 +1,18 @@
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../actions/userActions'
-import { FaPhoneAlt } from 'react-icons/fa'
+import {
+  FaCog,
+  FaFileContract,
+  FaPhoneAlt,
+  FaPlusCircle,
+  FaPowerOff,
+  FaSignInAlt,
+  FaUser,
+  FaUserCircle,
+  FaUserPlus,
+  FaUsers,
+} from 'react-icons/fa'
+import { resetUpdateUser, logout } from '../redux/users/usersSlice'
 import logo from '../images/logo.png'
 
 const Header = () => {
@@ -11,58 +22,61 @@ const Header = () => {
 
   const logoutHandler = () => {
     dispatch(logout())
+    dispatch(resetUpdateUser())
   }
 
   const authLinks = (
     <ul className='navbar-nav mr-right mb-2 mb-lg-0'>
       <li className='nav-item dropdown'>
         <span
-          className='nav-link  dropdown-toggle'
+          className='nav-link dropdown-toggle'
           id='navbarDropdown'
           role='button'
           data-bs-toggle='dropdown'
           aria-expanded='false'
         >
-          {userInfo && userInfo.name}
+          <FaUserCircle className='mb-1' /> {userInfo && userInfo.name}
         </span>
         <ul className='dropdown-menu' aria-labelledby='navbarDropdown'>
           <li>
             <Link to='/profile' className='dropdown-item'>
-              Profile
-            </Link>
-          </li>
-          <li>
-            <Link to='/' onClick={logoutHandler} className='dropdown-item'>
-              Logout
+              <FaUser className='mb-1' /> Profile
             </Link>
           </li>
         </ul>
       </li>
 
-      {userInfo && userInfo.isAdmin && (
-        <li className='nav-item dropdown'>
-          <span
-            className='nav-link  dropdown-toggle'
-            id='navbarDropdown'
-            role='button'
-            data-bs-toggle='dropdown'
-            aria-expanded='false'
-          >
-            Admin
-          </span>
-          <ul className='dropdown-menu' aria-labelledby='navbarDropdown'>
-            <li>
-              <Link to='/admin/users' className='dropdown-item'>
-                Users
-              </Link>
-            </li>
-            <li>
-              <Link to='/admin/users/logs' className='dropdown-item'>
-                Users Log
-              </Link>
-            </li>
-          </ul>
-        </li>
+      {userInfo && userInfo.roles.includes('Admin') && (
+        <>
+          <li className='nav-item dropdown '>
+            <span
+              className='nav-link dropdown-toggle'
+              id='navbarDropdown'
+              role='button'
+              data-bs-toggle='dropdown'
+              aria-expanded='false'
+            >
+              <FaCog className='mb-1' /> Admin
+            </span>
+            <ul className='dropdown-menu ' aria-labelledby='navbarDropdown'>
+              <li>
+                <Link to='/admin/users' className='dropdown-item'>
+                  <FaUsers className='mb-1' /> Users
+                </Link>
+              </li>
+              <li>
+                <Link to='/admin/users/logs' className='dropdown-item'>
+                  <FaFileContract className='mb-1' /> Users Log
+                </Link>
+              </li>
+            </ul>
+          </li>
+          <li className='nav-item'>
+            <Link to='/' onClick={logoutHandler} className='nav-link'>
+              <FaPowerOff className='mb-1' /> Logout
+            </Link>
+          </li>
+        </>
       )}
     </ul>
   )

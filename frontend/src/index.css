@@ -40,6 +40,9 @@ body {
   background-size: cover;
   background-color: #d6d6e3;
 }
+.modal-background {
+  background-color: #d6d6e3;
+}
 .nav-top {
   background-color: #ffffff;
 }
@@ -109,4 +112,19 @@ p {
 .contact-us-links {
   text-decoration: none;
   color: #111;
+}
+
+/* AUTH */
+.form-control {
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50px;
+  transition: 0.5s ease-in-out;
+}
+.form-control:focus {
+  box-shadow: 0 0.01rem 1rem rgba(255, 255, 255, 0.589) !important;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.6;
 }
