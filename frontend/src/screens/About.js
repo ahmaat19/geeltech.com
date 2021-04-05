@@ -7,7 +7,7 @@ const About = () => {
         <div className='row'>
           <div className='col-lg-7 col-md-5 col-sm-12 col-12 mx-auto'>
             <h2 className='fw-bold'>
-              We are the one of the most effective <br /> Software Development
+              We are the one of the most effective <br /> Web Development
               Companies in Somalia.
             </h2>
             <p className='fw-lighter pt-4'>

@@ -16,7 +16,7 @@ const Works = () => {
               <ul className='navbar-nav m-auto mb-2 mb-lg-0'>
                 <li className='nav-item mx-3 '>
                   <a
-                    className='nav-link active text-success work-link'
+                    className='nav-link active  work-link'
                     aria-current='page'
                     href=''
                   >
@@ -25,7 +25,7 @@ const Works = () => {
                 </li>
                 <li className='nav-item mx-3 '>
                   <a
-                    className='nav-link active text-success work-link'
+                    className='nav-link active  work-link'
                     aria-current='page'
                     href=''
                   >
@@ -34,7 +34,7 @@ const Works = () => {
                 </li>
                 <li className='nav-item mx-3 '>
                   <a
-                    className='nav-link active text-success work-link'
+                    className='nav-link active  work-link'
                     aria-current='page'
                     href=''
                   >
@@ -43,7 +43,7 @@ const Works = () => {
                 </li>
                 <li className='nav-item mx-3 '>
                   <a
-                    className='nav-link active text-success work-link'
+                    className='nav-link active  work-link'
                     aria-current='page'
                     href=''
                   >

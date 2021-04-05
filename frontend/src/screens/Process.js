@@ -25,11 +25,11 @@ const Strategies = () => {
                 Strategy
               </h1>
             </div>
-            <div className='col-lg-4 col-md-4 col-sm-12 col-12 py-2 my-auto'>
+            <div className='col-lg-4 col-md-4 col-sm-12 col-12 py-2 my-auto process'>
               <img
                 src={strategy}
                 alt='Strategy'
-                className='img-fluid rounded-pill w-75 border border-success border-5'
+                className='img-fluid rounded-pill w-75 border border-success border-5 process-img'
               />
             </div>
             <div className='col-lg-4 col-md-4 col-sm-12 col-12 py-2 text-success fw-light my-auto text-start'>

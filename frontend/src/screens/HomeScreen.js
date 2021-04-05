@@ -5,6 +5,7 @@ import Process from './Process'
 import Works from './Works'
 import Contact from './Contact'
 import Hero from '../components/Hero'
+import Clients from './ClentsScreen'
 
 const HomeScreen = ({ match }) => {
   useEffect(() => {}, [])
@@ -14,6 +15,7 @@ const HomeScreen = ({ match }) => {
       <main className='my-5 py-5'>
         <Hero />
         <About />
+        {/* <Clients /> */}
         <Services />
         <Process />
         <Works />

@@ -8,7 +8,7 @@ const Footer = () => {
     <footer>
       <div className='container'>
         <div className='row'>
-          <div className='col text-center text-success py-3'>
+          <div className='col text-center py-3 footer'>
             Copyright {currentYear} &copy; All Rights Reserved
           </div>
         </div>

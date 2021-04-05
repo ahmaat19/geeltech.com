@@ -70,62 +70,38 @@ const Header = () => {
   const guestLinks = (
     <ul className='navbar-nav ms-auto mb-2 mb-lg-0'>
       <li className='nav-item '>
-        <a
-          className='nav-link  active text-success'
-          aria-current='page'
-          href='#home'
-        >
+        <a className='nav-link  active ' aria-current='page' href='#home'>
           Home
         </a>
       </li>
       <li className='nav-item '>
-        <a
-          className='nav-link  active text-success'
-          aria-current='page'
-          href='#about'
-        >
+        <a className='nav-link  active ' aria-current='page' href='#about'>
           About
         </a>
       </li>
       <li className='nav-item '>
-        <a
-          className='nav-link  active text-success'
-          aria-current='page'
-          href='#services'
-        >
+        <a className='nav-link  active ' aria-current='page' href='#services'>
           Services
         </a>
       </li>
       <li className='nav-item '>
-        <a
-          className='nav-link  active text-success'
-          aria-current='page'
-          href='#process'
-        >
+        <a className='nav-link  active ' aria-current='page' href='#process'>
           Process
         </a>
       </li>
       <li className='nav-item '>
-        <a
-          className='nav-link  active text-success'
-          aria-current='page'
-          href='#works'
-        >
+        <a className='nav-link  active ' aria-current='page' href='#works'>
           Works
         </a>
       </li>
       <li className='nav-item '>
-        <a
-          className='nav-link  active text-success'
-          aria-current='page'
-          href='#contact'
-        >
+        <a className='nav-link  active ' aria-current='page' href='#contact'>
           Contact Us
         </a>
       </li>
       <li className='nav-item'>
         <a
-          className='nav-link   btn btn-success rounded-pill shadow '
+          className='nav-link   btn btn-success rounded-pill shadow py-2'
           aria-current='page'
           href='tel:+252615301507'
         >

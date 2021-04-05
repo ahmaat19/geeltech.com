@@ -19,7 +19,7 @@ const Services = () => {
               <img
                 src={web_design}
                 alt='Web Design'
-                className='card-img-top w-25 mx-auto service-img'
+                className='card-img-top w-25 mx-auto service-img p-2'
               />
               <div className='card-body'>
                 <h5 className='card-title text-success'>Web Design </h5>
@@ -36,7 +36,7 @@ const Services = () => {
               <img
                 src={development}
                 alt='Development'
-                className='card-img-top w-25 mx-auto service-img'
+                className='card-img-top w-25 mx-auto service-img p-2'
               />
               <div className='card-body'>
                 <h5 className='card-title text-success'>Development </h5>
@@ -52,7 +52,7 @@ const Services = () => {
               <img
                 src={ecommerce}
                 alt='Ecommerce'
-                className='card-img-top w-25 mx-auto service-img'
+                className='card-img-top w-25 mx-auto service-img p-2'
               />
               <div className='card-body'>
                 <h5 className='card-title text-success'>Ecommerce </h5>
@@ -69,7 +69,7 @@ const Services = () => {
               <img
                 src={seo}
                 alt='SEO Optimization'
-                className='card-img-top w-25 mx-auto service-img'
+                className='card-img-top w-25 mx-auto service-img p-2'
               />
               <div className='card-body'>
                 <h5 className='card-title text-success'>SEO Optimization </h5>
@@ -86,7 +86,7 @@ const Services = () => {
               <img
                 src={marketing}
                 alt='Marketing'
-                className='card-img-top w-25 mx-auto service-img'
+                className='card-img-top w-25 mx-auto service-img p-2'
               />
               <div className='card-body'>
                 <h5 className='card-title text-success'>Marketing </h5>
@@ -103,7 +103,7 @@ const Services = () => {
               <img
                 src={branding}
                 alt='Branding'
-                className='card-img-top w-25 mx-auto service-img'
+                className='card-img-top w-25 mx-auto service-img p-2'
               />
               <div className='card-body'>
                 <h5 className='card-title text-success'>Branding </h5>

@@ -1,20 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Yatra+One&display=swap');
+
 main {
   min-height: 80vh;
 }
 
 .bg-dark {
-  background-color: #46994b !important;
+  background-color: #298b4b !important;
+}
+nav {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
 }
 .nav-link {
   color: #fff !important;
 }
 .nav-link:hover {
-  color: rgba(255, 255, 255, 0.692) !important;
+  color: #69c489 !important;
 }
 
 .brand-logo {
   -webkit-filter: brightness(0) invert(1);
-  width: 50px;
+  width: 40px;
 }
 
 * {
@@ -22,6 +28,9 @@ main {
   padding: 0;
   box-sizing: border-box;
   scroll-behavior: smooth;
+}
+.text-success {
+  color: #298b4b;
 }
 body {
   /* background: url(./background.png) no-repeat center center fixed; */
@@ -39,17 +48,20 @@ body {
 }
 .navbar-toggler:focus {
   box-shadow: none;
-  border: #46994b solid 1px;
+  border: #298b4b solid 1px;
+}
+#home h1 {
+  font-family: 'Yatra One', cursive !important;
 }
 .icon-color {
   color: #fcfcfc;
 }
 .bg-success,
 .btn-success {
-  background-color: #46994b;
+  background-color: #298b4b;
 }
 .text-success {
-  color: #46994b;
+  color: #298b4b;
 }
 p {
   line-height: 1.8rem;
@@ -61,12 +73,20 @@ p {
   transform: scale(1.1);
 }
 
-.work-link {
-  color: #111;
+#process img {
+  transition: 0.5s ease-in-out;
+}
+#process img:hover {
+  transform: scale(1.05);
+}
+
+.work-link,
+.footer {
+  color: #298b4b !important;
 }
 
 .work-link:hover {
-  color: #46994b !important;
+  color: #125028 !important;
 }
 .card {
   overflow: hidden;
