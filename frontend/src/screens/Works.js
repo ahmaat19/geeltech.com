@@ -1,4 +1,9 @@
 import React from 'react'
+import digital_archive from '../images/digital_archive.jpg'
+import hr from '../images/hr.jpg'
+import blood from '../images/blood.jpg'
+import beydan from '../images/beydan.jpg'
+import sada from '../images/sada.jpg'
 
 const Works = () => {
   return (
@@ -89,54 +94,40 @@ const Works = () => {
 export const projects = [
   {
     _id: 1,
-    title: 'E-Commerce Dashboard',
-    image:
-      'https://i.pinimg.com/originals/f8/cd/aa/f8cdaa282fd12f91bb0bd6088c277924.jpg',
-    tag: 'Ecommerce',
-    description: ' Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
+    title: 'Digital Archive',
+    image: digital_archive,
+    tag: 'Web App',
+    description: 'Online digital archive for storing any scanned documents',
   },
   {
     _id: 2,
-    title: 'Modern Logo',
-    image:
-      'https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/23197467/original/7fe4f022a60d8c54335a09d1ed3ad86b86df63f6/design-an-impressive-logo.jpg',
-    tag: 'Brand',
-    description:
-      'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo, quisquam? Sapiente dolor cupiditate asperiores debitis, dolorem, pariatur amet.',
+    title: 'Coffee Shop Website',
+    image: beydan,
+    tag: 'Website',
+    description: 'Modern coffee shop website with beautiful design',
   },
   {
     _id: 3,
-    title: 'Business Card',
-    image:
-      'https://99designs-blog.imgix.net/blog/wp-content/uploads/2017/07/2ac977f5-bff9-4ef0-aa92-38931ae8fe60-2-e1500740591149.png?auto=format&q=60&fit=max&w=930',
-    tag: 'Branding',
-    description: ' Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
-  },
-  {
-    _id: 5,
-    title: 'Modern Logo',
-    image:
-      'https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/23197467/original/7fe4f022a60d8c54335a09d1ed3ad86b86df63f6/design-an-impressive-logo.jpg',
-    tag: 'Brand',
+    title: 'Human Resource System',
+    image: hr,
+    tag: 'Web App',
     description:
-      'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo, quisquam? Sapiente dolor cupiditate asperiores debitis, dolorem, pariatur amet.',
-  },
-
-  {
-    _id: 6,
-    title: 'Business Card',
-    image:
-      'https://99designs-blog.imgix.net/blog/wp-content/uploads/2017/07/2ac977f5-bff9-4ef0-aa92-38931ae8fe60-2-e1500740591149.png?auto=format&q=60&fit=max&w=930',
-    tag: 'Branding',
-    description: ' Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
+      'Complete customized human resource management system with payroll and attendance',
   },
   {
     _id: 4,
-    title: 'E-Commerce Dashboard',
-    image:
-      'https://i.pinimg.com/originals/f8/cd/aa/f8cdaa282fd12f91bb0bd6088c277924.jpg',
-    tag: 'Ecommerce',
-    description: ' Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
+    title: 'Fast Food Website',
+    image: sada,
+    tag: 'Website',
+    description: 'Well designed fast food website',
+  },
+  {
+    _id: 5,
+    title: 'Blood Bank System',
+    image: blood,
+    tag: 'Web App',
+    description:
+      'Blood bank system that keep trucks for blood status and storing ',
   },
 ]
 
