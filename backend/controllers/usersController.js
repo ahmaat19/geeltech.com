@@ -249,7 +249,7 @@ export const forgotPassword = asyncHandler(async (req, res) => {
 
   await user.save()
 
-  const resetUrl = `http://localhost:3000/resetpassword/${resetToken}`
+  const resetUrl = `http://geeltech.com/resetpassword/${resetToken}`
 
   const message = forgotMessage(resetUrl, user)
 
