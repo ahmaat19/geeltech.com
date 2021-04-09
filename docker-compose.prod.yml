@@ -24,7 +24,7 @@ services:
   db:
     image: mongo:4.0-xenial
     ports:
-      - 27018:27017
+      - 27017:27017
     volumes:
       - geeltech:/data/db
     restart: unless-stopped
