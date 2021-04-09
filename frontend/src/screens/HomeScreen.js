@@ -6,6 +6,7 @@ import Works from './Works'
 import Contact from './Contact'
 import Hero from '../components/Hero'
 import Clients from './ClentsScreen'
+import ProjectGallery from './ProjectGalleryScreen'
 
 const HomeScreen = ({ match }) => {
   useEffect(() => {}, [])
@@ -18,7 +19,8 @@ const HomeScreen = ({ match }) => {
         {/* <Clients /> */}
         <Services />
         <Process />
-        <Works />
+        {/* <Works /> */}
+        <ProjectGallery />
         <Contact />
       </main>
     </>
