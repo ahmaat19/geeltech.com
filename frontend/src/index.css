@@ -129,5 +129,6 @@ p {
   opacity: 0.6;
 }
 .styles_wrapper__1kG3C {
-  background-color: transparent;
+  background-color: transparent !important;
+  min-height: auto !important;
 }
