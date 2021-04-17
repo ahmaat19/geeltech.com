@@ -12,7 +12,7 @@ export const sendEmail = (options) => {
   })
 
   const mailOptions = {
-    from: `"Ahmed " <${process.env.SMTP_USER}>`,
+    from: `"Geel Tech Team " <${process.env.SMTP_USER}>`,
     to: options.to,
     subject: options.subject,
     html: options.text,

@@ -11,6 +11,7 @@ import {
   FaUserCircle,
   FaUserPlus,
   FaUsers,
+  FaEnvelope
 } from 'react-icons/fa'
 import { resetUpdateUser, logout } from '../redux/users/usersSlice'
 import logo from '../images/logo.png'
@@ -120,7 +121,7 @@ const Header = () => {
           aria-current='page'
           href='mailto:info@geeltech.com'
         >
-          <FaPhoneAlt className='icon-color' /> info@geeltech.com
+          <FaEnvelope className='icon-color' /> info@geeltech.com
         </a>
       </li>
     </ul>

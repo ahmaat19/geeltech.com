@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/static/css/main.1a4151a7.chunk.css",
-    "main.js": "/static/js/main.9496e34a.chunk.js",
-    "main.js.map": "/static/js/main.9496e34a.chunk.js.map",
+    "main.js": "/static/js/main.705f89b1.chunk.js",
+    "main.js.map": "/static/js/main.705f89b1.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.094d12d8.js",
     "runtime-main.js.map": "/static/js/runtime-main.094d12d8.js.map",
     "static/css/2.6dfd3513.chunk.css": "/static/css/2.6dfd3513.chunk.css",
-    "static/js/2.15786e06.chunk.js": "/static/js/2.15786e06.chunk.js",
-    "static/js/2.15786e06.chunk.js.map": "/static/js/2.15786e06.chunk.js.map",
+    "static/js/2.b7747dd1.chunk.js": "/static/js/2.b7747dd1.chunk.js",
+    "static/js/2.b7747dd1.chunk.js.map": "/static/js/2.b7747dd1.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.6dfd3513.chunk.css.map": "/static/css/2.6dfd3513.chunk.css.map",
     "static/css/main.1a4151a7.chunk.css.map": "/static/css/main.1a4151a7.chunk.css.map",
-    "static/js/2.15786e06.chunk.js.LICENSE.txt": "/static/js/2.15786e06.chunk.js.LICENSE.txt",
+    "static/js/2.b7747dd1.chunk.js.LICENSE.txt": "/static/js/2.b7747dd1.chunk.js.LICENSE.txt",
     "static/media/beydan.b52e94b7.jpg": "/static/media/beydan.b52e94b7.jpg",
     "static/media/blood.4bbdf2a6.jpg": "/static/media/blood.4bbdf2a6.jpg",
     "static/media/branding.a397776a.png": "/static/media/branding.a397776a.png",
@@ -21,7 +21,7 @@
     "static/media/digital_archive.d935d7e2.jpg": "/static/media/digital_archive.d935d7e2.jpg",
     "static/media/ecommerce.baf119a5.png": "/static/media/ecommerce.baf119a5.png",
     "static/media/hr.84eeb483.jpg": "/static/media/hr.84eeb483.jpg",
-    "static/media/logo.03dbf897.png": "/static/media/logo.03dbf897.png",
+    "static/media/logo.7ae48c52.png": "/static/media/logo.7ae48c52.png",
     "static/media/marketing.4f773288.png": "/static/media/marketing.4f773288.png",
     "static/media/online_connection.5586a91b.svg": "/static/media/online_connection.5586a91b.svg",
     "static/media/sada.d73a080e.jpg": "/static/media/sada.d73a080e.jpg",
@@ -33,8 +33,8 @@
   "entrypoints": [
     "static/js/runtime-main.094d12d8.js",
     "static/css/2.6dfd3513.chunk.css",
-    "static/js/2.15786e06.chunk.js",
+    "static/js/2.b7747dd1.chunk.js",
     "static/css/main.1a4151a7.chunk.css",
-    "static/js/main.9496e34a.chunk.js"
+    "static/js/main.705f89b1.chunk.js"
   ]
 }
