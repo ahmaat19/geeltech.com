@@ -118,9 +118,9 @@ const Header = () => {
         <a
           className='nav-link   btn btn-success rounded-pill shadow py-2'
           aria-current='page'
-          href='tel:+252615301507'
+          href='mailto:info@geeltech.com'
         >
-          <FaPhoneAlt className='icon-color' /> +252 61 530 1507
+          <FaPhoneAlt className='icon-color' /> info@geeltech.com
         </a>
       </li>
     </ul>

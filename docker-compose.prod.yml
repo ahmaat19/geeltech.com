@@ -22,10 +22,10 @@ services:
       NODE_ENV: development
       MONGO_URI: mongodb://db/geeltech
       JWT_SECRET: mom&dad
-      SMTP_SERVER: gmail
-      SMTP_USER: ahmaat19@gmail.com
-      SMTP_PORT: 587
-      SMTP_KEY: bjafgcqqgidywuom
+      SMTP_SERVER: smtp.zoho.com
+      SMTP_USER: noreply@geeltech.com
+      SMTP_PORT: 465
+      SMTP_KEY: m3SR4Ru99EQt
     restart: unless-stopped
   db:
     image: mongo:4.0-xenial
