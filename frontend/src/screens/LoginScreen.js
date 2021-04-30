@@ -36,7 +36,7 @@ const LoginScreen = ({ history }) => {
   return (
     <FormContainer>
       <h3 className=''>Sign In</h3>
-      {errorLogin && <Message variant='danger'>llllllll</Message>}
+      {errorLogin && <Message variant='danger'>{errorLogin}</Message>}
 
       <form onSubmit={handleSubmit(submitHandler)}>
         <div className='mb-3'>

@@ -82,7 +82,7 @@ const ForgotPasswordScreen = ({ history }) => {
 
         <button
           type='submit'
-          className='btn btn-primary  '
+          className='btn btn-success  '
           disabled={loadingForgotPassword && true}
         >
           {loadingForgotPassword ? (
