@@ -18,14 +18,8 @@ services:
     build: ./backend
     ports:
       - 5000:5000
-    environment:
-      NODE_ENV: development
-      MONGO_URI: mongodb://db/geeltech
-      JWT_SECRET: mom&dad
-      SMTP_SERVER: smtp.zoho.com
-      SMTP_USER: noreply@geeltech.com
-      SMTP_PORT: 465
-      SMTP_KEY: m3SR4Ru99EQt
+    env_file:
+      - ./backend/env.sh
     restart: unless-stopped
   db:
     image: mongo:4.0-xenial

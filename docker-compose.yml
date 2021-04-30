@@ -11,14 +11,8 @@ services:
     build: ./backend
     ports:
       - 5000:5000
-    environment:
-      NODE_ENV: development
-      MONGO_URI: mongodb://db/geeltech
-      JWT_SECRET: mom&dad
-      SMTP_SERVER: gmail
-      SMTP_USER: ahmaat19@gmail.com
-      SMTP_PORT: 587
-      SMTP_KEY: bjafgcqqgidywuom
+      env_file:
+        - ./backend/env.sh
     volumes:
       - ./backend:/app
   db:
