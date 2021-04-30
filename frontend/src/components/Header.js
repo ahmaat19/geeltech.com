@@ -11,7 +11,7 @@ import {
   FaUserCircle,
   FaUserPlus,
   FaUsers,
-  FaEnvelope
+  FaEnvelope,
 } from 'react-icons/fa'
 import { resetUpdateUser, logout } from '../redux/users/usersSlice'
 import logo from '../images/logo.png'
@@ -27,7 +27,7 @@ const Header = () => {
   }
 
   const authLinks = (
-    <ul className='navbar-nav mr-right mb-2 mb-lg-0'>
+    <ul className='navbar-nav ms-auto mb-2 mb-lg-0'>
       <li className='nav-item dropdown'>
         <span
           className='nav-link dropdown-toggle'
@@ -72,14 +72,13 @@ const Header = () => {
               </li>
             </ul>
           </li>
-          
         </>
       )}
-	<li className='nav-item'>
-            <Link to='/' onClick={logoutHandler} className='nav-link'>
-              <FaPowerOff className='mb-1' /> Logout
-            </Link>
-          </li>
+      <li className='nav-item'>
+        <Link to='/' onClick={logoutHandler} className='nav-link'>
+          <FaPowerOff className='mb-1' /> Logout
+        </Link>
+      </li>
     </ul>
   )
 
@@ -146,7 +145,7 @@ const Header = () => {
             <span className='navbar-toggler-icon'></span>
           </button>
           <div className='collapse navbar-collapse' id='navbarSupportedContent'>
-            <ul className='navbar-nav mr-auto mb-2 mb-lg-0'></ul>
+            <ul className='navbar-nav sr-auto mb-2 mb-lg-0'></ul>
             {userInfo ? authLinks : guestLinks}
           </div>
         </div>

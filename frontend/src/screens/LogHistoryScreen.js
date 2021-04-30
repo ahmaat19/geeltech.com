@@ -35,7 +35,7 @@ const UserLogHistoryScreen = () => {
 
       <input
         type='text'
-        className='form-control text-info '
+        className='form-control '
         placeholder='Search by Email or Name'
         name='search'
         value={search}

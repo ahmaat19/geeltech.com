@@ -18,7 +18,7 @@ const Message = ({ variant, children }) => {
     alert && (
       <div
         className='position-fixed top-0 end-0 p-2 animate__animated animate__lightSpeedInRight '
-        style={{ zIndex: 50000 }}
+        style={{ zIndex: 5 }}
       >
         <div
           className={`toast show text-${variant}`}
@@ -27,10 +27,10 @@ const Message = ({ variant, children }) => {
         >
           <div className='toast-body text-center '>
             {variant === 'success' ? (
-              <FaCheckCircle className='fs-4 mr-3' />
+              <FaCheckCircle className='fs-4 mr-3 mb-1' />
             ) : (
-              <FaTimesCircle className='fs-4 mr-3' />
-            )}
+              <FaTimesCircle className='fs-4 mr-3 mb-1' />
+            )}{' '}
             {children}
           </div>
         </div>
