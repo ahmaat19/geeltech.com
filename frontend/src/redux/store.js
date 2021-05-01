@@ -12,6 +12,12 @@ import {
   resetPasswordSliceReducer,
 } from './users/usersSlice'
 
+import {
+  addQuotationSliceReducer,
+  deleteQuotationSliceReducer,
+  listQuotationSliceReducer,
+} from './quotations/quotationsSlice'
+
 export default configureStore({
   reducer: {
     userLogin: userLoginSliceReducer,
@@ -24,5 +30,9 @@ export default configureStore({
     userUpdate: updateUserSliceReducer,
     userForgotPassword: forgotPasswordSliceReducer,
     userResetPassword: resetPasswordSliceReducer,
+
+    addQuotation: addQuotationSliceReducer,
+    deleteQuotation: deleteQuotationSliceReducer,
+    listQuotation: listQuotationSliceReducer,
   },
 })
