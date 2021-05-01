@@ -6,6 +6,7 @@ import {
   FaCheckCircle,
   FaEdit,
   FaPlus,
+  FaPlusCircle,
   FaTimesCircle,
   FaTrash,
 } from 'react-icons/fa'
@@ -28,8 +29,8 @@ import {
   resetDeleteQuotation,
 } from '../redux/quotations/quotationsSlice'
 import {
-  addQuotation,
-  deleteQuotation,
+  addQuotation as quotationAdd,
+  deleteQuotation as quotationDelete,
   listQuotations,
 } from '../redux/quotations/quotationsThunk'
 
@@ -38,7 +39,7 @@ import { UnlockAccess } from '../components/UnlockAccess'
 import { confirmAlert } from 'react-confirm-alert'
 import { Confirm } from '../components/Confirm'
 import Pagination from '../components/Pagination'
-import { useForm } from 'react-hook-form'
+import { useForm, useFieldArray, Controller, useWatch } from 'react-hook-form'
 
 const QuotationScreen = () => {
   const {
@@ -47,12 +48,19 @@ const QuotationScreen = () => {
     watch,
     setValue,
     reset,
+    control,
     formState: { errors },
   } = useForm({
     defaultValues: {
       admin: false,
       user: false,
+      jobInfo: [{ item: '', estimatedCost: '', estimatedTime: '' }],
     },
+  })
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'jobInfo',
   })
 
   const [id, setId] = useState(null)
@@ -68,8 +76,8 @@ const QuotationScreen = () => {
     quotations,
     loadingListQuotations,
     errorListQuotations,
-    // total,
-    // pages,
+    total,
+    pages,
   } = listQuotation
 
   const deleteQuotation = useSelector((state) => state.deleteQuotation)
@@ -83,7 +91,7 @@ const QuotationScreen = () => {
   } = addQuotation
 
   const userList = useSelector((state) => state.userList)
-  const { users, loadingListUsers, errorListUsers, total, pages } = userList
+  const { users, loadingListUsers, errorListUsers } = userList
 
   const userUpdate = useSelector((state) => state.userUpdate)
   const { loadingUpdateUser, errorUpdateUser, successUpdateUser } = userUpdate
@@ -155,37 +163,39 @@ const QuotationScreen = () => {
   }, [dispatch, successAddQuotation, page, limit])
 
   const deleteHandler = (id) => {
-    confirmAlert(Confirm(() => dispatch(deleteUser(id))))
+    confirmAlert(Confirm(() => dispatch(quotationDelete(id))))
   }
 
   const submitHandler = (data) => {
-    edit
-      ? dispatch(
-          updateUser({
-            _id: id,
-            name: data.name,
-            email: data.email,
-            password: data.password,
-            admin: data.admin,
-            user: data.user,
-          })
-        )
-      : dispatch(registerUser(data))
+    // edit
+    //   ? dispatch(
+    //       updateUser({
+    //         _id: id,
+    //         name: data.name,
+    //         email: data.email,
+    //         password: data.password,
+    //         admin: data.admin,
+    //         user: data.user,
+    //       })
+    //     )
+    //   : dispatch(registerUser(data))
+    dispatch(quotationAdd(data))
+    // console.log(data)
   }
 
-  const editHandler = (user) => {
-    setId(user._id)
-    setEdit(true)
-    setValue('name', user.name)
-    setValue('email', user.email)
+  // const editHandler = (user) => {
+  //   setId(user._id)
+  //   setEdit(true)
+  //   setValue('name', user.name)
+  //   setValue('email', user.email)
 
-    user &&
-      user.roles.map(
-        (role) =>
-          (role === 'Admin' && setValue('admin', true)) ||
-          (role === 'User' && setValue('user', true))
-      )
-  }
+  //   user &&
+  //     user.roles.map(
+  //       (role) =>
+  //         (role === 'Admin' && setValue('admin', true)) ||
+  //         (role === 'User' && setValue('user', true))
+  //     )
+  // }
 
   return (
     <div className='container'>
@@ -198,11 +208,11 @@ const QuotationScreen = () => {
         aria-labelledby='editUserModalLabel'
         aria-hidden='true'
       >
-        <div className='modal-dialog'>
+        <div className='modal-dialog modal-lg'>
           <div className='modal-content modal-background'>
             <div className='modal-header'>
               <h3 className='modal-title ' id='editUserModalLabel'>
-                {edit ? 'Edit User' : 'Add User'}
+                {edit ? 'Edit Quotation' : 'Add Quotation'}
               </h3>
               <button
                 type='button'
@@ -236,113 +246,156 @@ const QuotationScreen = () => {
                 <Message variant='danger'>{errorListUsers}</Message>
               ) : (
                 <form onSubmit={handleSubmit(submitHandler)}>
-                  <div className='mb-3'>
-                    <label htmlFor='name'>Name</label>
-                    <input
-                      {...register('name', { required: 'Name is required' })}
-                      type='text'
-                      placeholder='Enter name'
-                      className='form-control'
-                      autoFocus
-                    />
-                    {errors.name && (
-                      <span className='text-danger'>{errors.name.message}</span>
-                    )}
+                  <div className='row gy-2'>
+                    <div className='col-7'></div>
+                    <div className='col-md-6 col-12'>
+                      <label htmlFor='name'>Customer</label>
+                      <input
+                        {...register('name', {
+                          required: 'Customer is required',
+                        })}
+                        type='text'
+                        className='form-control'
+                        placeholder='customer'
+                        autoFocus
+                      />
+                      {errors.name && (
+                        <span className='text-danger'>
+                          {errors.name.message}
+                        </span>
+                      )}
+                    </div>
+                    <div className='col-md-6 col-12'>
+                      <label htmlFor='name'>Address</label>
+                      <input
+                        {...register('address', {
+                          required: 'Address is required',
+                        })}
+                        type='text'
+                        className='form-control'
+                        placeholder='address'
+                      />
+                      {errors.address && (
+                        <span className='text-danger'>
+                          {errors.address.message}
+                        </span>
+                      )}
+                    </div>
+                    <div className='col-md-6 col-12'>
+                      <label htmlFor='name'>City</label>
+                      <input
+                        {...register('city', {
+                          required: 'City is required',
+                        })}
+                        type='text'
+                        className='form-control'
+                        placeholder='city'
+                      />
+                      {errors.city && (
+                        <span className='text-danger'>
+                          {errors.city.message}
+                        </span>
+                      )}
+                    </div>
+                    <div className='col-md-6 col-12'>
+                      <label htmlFor='name'>Mobile</label>
+                      <input
+                        {...register('mobile', {
+                          required: 'Mobile number is required',
+                        })}
+                        type='number'
+                        className='form-control'
+                        placeholder='mobile'
+                      />
+                      {errors.mobile && (
+                        <span className='text-danger'>
+                          {errors.mobile.message}
+                        </span>
+                      )}
+                    </div>
+                    <div className='col-12'>
+                      <label htmlFor='name'>Email</label>
+                      <input
+                        {...register('email', {
+                          required: 'Email is required',
+                          pattern: {
+                            value: /\S+@\S+\.+\S+/,
+                            message:
+                              'Entered value does not match email format',
+                          },
+                        })}
+                        type='email'
+                        className='form-control'
+                        placeholder='email'
+                      />
+                      {errors.email && (
+                        <span className='text-danger'>
+                          {errors.email.message}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  <div className='mb-3'>
-                    <label htmlFor='email'>Email Address</label>
-                    <input
-                      {...register('email', {
-                        required: 'Email is required',
-                        pattern: {
-                          value: /\S+@\S+\.+\S+/,
-                          message: 'Entered value does not match email format',
-                        },
-                      })}
-                      type='email'
-                      placeholder='Enter email'
-                      className='form-control'
-                    />
-                    {errors.email && (
-                      <span className='text-danger'>
-                        {errors.email.message}
-                      </span>
-                    )}
-                  </div>
-                  <div className='mb-3'>
-                    <label htmlFor='password'>Password</label>
-                    <input
-                      {...register('password', {
-                        minLength: {
-                          value: 6,
-                          message: 'Password must have at least 6 characters',
-                        },
-                      })}
-                      type='password'
-                      placeholder='Enter password'
-                      className='form-control'
-                    />
-                    {errors.password && (
-                      <span className='text-danger'>
-                        {errors.password.message}
-                      </span>
-                    )}
-                  </div>
-                  <div className='mb-3'>
-                    <label htmlFor='confirmPassword'>Confirm Password</label>
-                    <input
-                      {...register('confirmPassword', {
-                        minLength: {
-                          value: 6,
-                          message: 'Password must have at least 6 characters',
-                        },
-                        validate: (value) =>
-                          value === watch().password ||
-                          'The passwords do not match',
-                      })}
-                      type='password'
-                      placeholder='Confirm password'
-                      className='form-control'
-                    />
-                    {errors.confirmPassword && (
-                      <span className='text-danger'>
-                        {errors.confirmPassword.message}
-                      </span>
-                    )}
-                  </div>
+                  <hr className='mt-5' />
 
-                  <div className='row'>
-                    <div className='col'>
-                      <div className='form-check'>
-                        <input
-                          className='form-check-input'
-                          type='checkbox'
-                          id='admin'
-                          {...register('admin')}
-                          checked={watch().admin}
-                        />
-                        <label className='form-check-label' htmlFor='admin'>
-                          Admin
-                        </label>
+                  {fields.map((item, index) => {
+                    return (
+                      <div className='row py-1' key={item.id}>
+                        <div className='col-md-4 col-12'>
+                          <label htmlFor='item'>Item</label>
+                          <input
+                            defaultValue={`${item.item}`} // make sure to set up defaultValue
+                            {...register(`jobInfo.${index}.item`)}
+                            className='form-control'
+                            placeholder='item'
+                          />
+                        </div>
+                        <div className='col-md-3 col-12'>
+                          <label htmlFor='estimatedCost'>E. Cost ($)</label>
+                          <input
+                            defaultValue={`${item.estimatedCost}`} // make sure to set up defaultValue
+                            {...register(`jobInfo.${index}.estimatedCost`)}
+                            className='form-control'
+                            placeholder='Estimated cost ($)'
+                          />
+                        </div>
+
+                        <div className='col-md-3 col-12'>
+                          <label htmlFor='estimatedTime'>E. Time (day)</label>
+                          <input
+                            defaultValue={`${item.estimatedTime}`} // make sure to set up defaultValue
+                            {...register(`jobInfo.${index}.estimatedTime`)}
+                            className='form-control'
+                            placeholder='Estimated time (day)'
+                          />
+                        </div>
+                        <div className='col-md-2 col-12'>
+                          <button
+                            type='button'
+                            className='btn btn-danger float-end'
+                            onClick={() => remove(index)}
+                            style={{ marginTop: '1.7rem' }}
+                          >
+                            <FaTimesCircle className='mb-1' />
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                    <div className='col'>
-                      <div className='form-check'>
-                        <input
-                          className='form-check-input'
-                          type='checkbox'
-                          id='user'
-                          {...register('user')}
-                          checked={watch().user}
-                        />
-                        <label className='form-check-label' htmlFor='user'>
-                          User
-                        </label>
-                      </div>
-                    </div>
-                  </div>
+                    )
+                  })}
 
                   <div className='modal-footer'>
+                    <button
+                      type='button'
+                      className='btn btn-success'
+                      onClick={() => {
+                        append({
+                          item: '',
+                          estimatedTime: '',
+                          estimatedCost: '',
+                        })
+                      }}
+                    >
+                      <FaPlusCircle className='mb-1' /> Append
+                    </button>
                     <button
                       type='button'
                       className='btn btn-secondary '
@@ -428,14 +481,14 @@ const QuotationScreen = () => {
                       </td>
 
                       <td className='btn-group'>
-                        <button
+                        {/* <button
                           className='btn btn-success btn-sm'
                           onClick={() => editHandler(quotation)}
                           data-bs-toggle='modal'
                           data-bs-target='#editUserModal'
                         >
                           <FaEdit className='mb-1' /> Edit
-                        </button>
+                        </button> */}
 
                         <button
                           className='btn btn-danger btn-sm'

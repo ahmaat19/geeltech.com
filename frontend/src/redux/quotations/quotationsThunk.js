@@ -26,8 +26,8 @@ const configHeaderNormal = () => {
 // add quotation
 export const addQuotation = createAsyncThunk(
   'addQuotation',
-  async (quotation) => {
-    const config = configHeader()
+  async (quotation, { getState }) => {
+    const config = configHeader(getState)
     try {
       const { data } = await axios.post(`/api/quotation`, quotation, config)
       return data

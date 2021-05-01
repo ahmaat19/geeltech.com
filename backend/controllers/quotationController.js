@@ -34,7 +34,7 @@ export const getQuotation = asyncHandler(async (req, res) => {
 
 export const addQuotation = asyncHandler(async (req, res) => {
   const { jobInfo, name, city, address, mobile, email } = req.body
-
+  console.log(req.body)
   if (jobInfo && jobInfo.length === 0) {
     res.status(400)
     throw new Error('No job information')

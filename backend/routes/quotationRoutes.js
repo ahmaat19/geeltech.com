@@ -10,8 +10,8 @@ const router = express.Router()
 
 router
   .route('/')
-  .get(protect, admin, getQuotation)
   .post(protect, admin, addQuotation)
+  .get(protect, admin, getQuotation)
 router.route('/:id').delete(protect, admin, deleteQuotation)
 
 export default router
