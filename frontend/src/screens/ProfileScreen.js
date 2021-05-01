@@ -56,7 +56,7 @@ const ProfileScreen = () => {
         <Message variant='danger'>{errorUpdateUserProfile}</Message>
       )}
       {errorUserDetail && <Message variant='danger'>{errorUserDetail}</Message>}
-      {loadingUserDetail && (
+      {successUpdateUserProfile && (
         <Message variant='success'>Profile Updated </Message>
       )}
       {loadingUserDetail && <Loader></Loader>}

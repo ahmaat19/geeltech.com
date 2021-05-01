@@ -70,6 +70,11 @@ const Header = () => {
                   <FaFileContract className='mb-1' /> Users Log
                 </Link>
               </li>
+              <li>
+                <Link to='/admin/users/quotation' className='dropdown-item'>
+                  <FaFileContract className='mb-1' /> Quotation
+                </Link>
+              </li>
             </ul>
           </li>
         </>
