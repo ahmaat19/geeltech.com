@@ -71,7 +71,7 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link to='/admin/users/quotation' className='dropdown-item'>
+                <Link to='/admin/quotation' className='dropdown-item'>
                   <FaFileContract className='mb-1' /> Quotation
                 </Link>
               </li>

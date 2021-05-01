@@ -12,6 +12,7 @@ import PrivateRoute from './PrivateRoute'
 import UserLogHistoryScreen from '../../screens/LogHistoryScreen'
 import ForgotPasswordScreen from '../../screens/ForgotPasswordScreen'
 import ResetPasswordScreen from '../../screens/ResetPasswordScreen'
+import QuotationScreen from '../../screens/QuotationScreen'
 
 const Routes = () => {
   return (
@@ -47,6 +48,13 @@ const Routes = () => {
           path='/admin/users/page/:pageNumber'
           role={['Admin']}
           component={UserListScreen}
+        />
+
+        <PrivateRoute
+          exact
+          path='/admin/quotation'
+          role={['Admin']}
+          component={QuotationScreen}
         />
 
         <Route component={NotFound} />
