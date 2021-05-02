@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import moment from 'moment'
 import {
-  FaCheckCircle,
-  FaEdit,
+  FaInfo,
   FaPlus,
   FaPlusCircle,
   FaTimesCircle,
@@ -40,6 +40,7 @@ import { confirmAlert } from 'react-confirm-alert'
 import { Confirm } from '../components/Confirm'
 import Pagination from '../components/Pagination'
 import { useForm, useFieldArray, Controller, useWatch } from 'react-hook-form'
+import QuotationPreviewScreen from './QuotationPreviewScreen'
 
 const QuotationScreen = () => {
   const {
@@ -65,6 +66,7 @@ const QuotationScreen = () => {
 
   const [id, setId] = useState(null)
   const [edit, setEdit] = useState(false)
+  const [quotes, setQuotes] = useState({})
 
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(30)
@@ -426,7 +428,7 @@ const QuotationScreen = () => {
       </div>
 
       <div className='d-flex justify-content-between align-items-center'>
-        <h3 className=''>Users</h3>
+        <h3 className=''>Quotations</h3>
         <button
           className='btn btn-success '
           data-bs-toggle='modal'
@@ -462,9 +464,9 @@ const QuotationScreen = () => {
               <thead>
                 <tr>
                   <th>ID</th>
+                  <th>Date & Time</th>
                   <th>CUSTOMER</th>
                   <th>EMAIL</th>
-                  <th>ADMIN</th>
                   <th></th>
                 </tr>
               </thead>
@@ -473,6 +475,8 @@ const QuotationScreen = () => {
                   quotations.map((quotation) => (
                     <tr key={quotation._id}>
                       <td>{quotation._id}</td>
+                      <td>{moment(quotation.createdAt).format('lll')}</td>
+
                       <td>{quotation.name}</td>
                       <td>
                         <a href={`mailto:${quotation.email}`}>
@@ -489,7 +493,14 @@ const QuotationScreen = () => {
                         >
                           <FaEdit className='mb-1' /> Edit
                         </button> */}
-
+                        <button
+                          className='btn btn-success btn-sm'
+                          onClick={() => setQuotes(quotation)}
+                          data-bs-toggle='modal'
+                          data-bs-target='#quotationDetailsModal'
+                        >
+                          <FaInfo className='mb-1' /> Details
+                        </button>
                         <button
                           className='btn btn-danger btn-sm'
                           onClick={() => deleteHandler(quotation._id)}
@@ -514,6 +525,34 @@ const QuotationScreen = () => {
           </div>
         </>
       )}
+
+      <div
+        className='modal fade'
+        id='quotationDetailsModal'
+        data-bs-backdrop='static'
+        data-bs-keyboard='false'
+        tabIndex='-1'
+        aria-labelledby='quotationDetailsModalLabel'
+        aria-hidden='true'
+      >
+        <div className='modal-dialog modal-lg'>
+          <div className='modal-content modal-background'>
+            <div className='modal-header'>
+              <h3 className='modal-title ' id='quotationDetailsModalLabel'>
+                Quotation Details
+              </h3>
+              <button
+                type='button'
+                className='btn-close'
+                data-bs-dismiss='modal'
+                aria-label='Close'
+              ></button>
+            </div>
+
+            <QuotationPreviewScreen quotes={quotes} />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
