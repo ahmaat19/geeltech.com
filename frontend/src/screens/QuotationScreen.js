@@ -41,6 +41,7 @@ import { Confirm } from '../components/Confirm'
 import Pagination from '../components/Pagination'
 import { useForm, useFieldArray, Controller, useWatch } from 'react-hook-form'
 import QuotationPreviewScreen from './QuotationPreviewScreen'
+import InvoicePreviewScreen from './InvoicePreviewScreen'
 
 const QuotationScreen = () => {
   const {
@@ -505,6 +506,15 @@ const QuotationScreen = () => {
                           <FaEdit className='mb-1' /> Edit
                         </button> */}
                         <button
+                          className='btn btn-primary btn-sm'
+                          onClick={() => setQuotes(quotation)}
+                          data-bs-toggle='modal'
+                          data-bs-target='#invoicePreviewModal'
+                        >
+                          <FaInfo className='mb-1' /> Invoice
+                        </button>
+
+                        <button
                           className='btn btn-success btn-sm'
                           onClick={() => setQuotes(quotation)}
                           data-bs-toggle='modal'
@@ -561,6 +571,34 @@ const QuotationScreen = () => {
             </div>
 
             <QuotationPreviewScreen quotes={quotes} />
+          </div>
+        </div>
+      </div>
+
+      <div
+        className='modal fade'
+        id='invoicePreviewModal'
+        data-bs-backdrop='static'
+        data-bs-keyboard='false'
+        tabIndex='-1'
+        aria-labelledby='invoicePreviewModalLabel'
+        aria-hidden='true'
+      >
+        <div className='modal-dialog modal-lg'>
+          <div className='modal-content modal-background'>
+            <div className='modal-header'>
+              <h3 className='modal-title ' id='invoicePreviewModalLabel'>
+                Invoice Details
+              </h3>
+              <button
+                type='button'
+                className='btn-close'
+                data-bs-dismiss='modal'
+                aria-label='Close'
+              ></button>
+            </div>
+
+            <InvoicePreviewScreen quotes={quotes} />
           </div>
         </div>
       </div>

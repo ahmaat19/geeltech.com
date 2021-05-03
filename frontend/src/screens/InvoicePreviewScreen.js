@@ -11,10 +11,7 @@ import logo from '../images/logo.png'
 
 import { useReactToPrint } from 'react-to-print'
 
-const QuotationPreviewScreen = ({ quotes }) => {
-  var myDate = new Date(quotes && quotes._id && quotes.createdAt)
-  myDate.setDate(myDate.getDate() + 30)
-
+const InvoicePreviewScreen = ({ quotes }) => {
   const componentRef = useRef()
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -58,7 +55,7 @@ const QuotationPreviewScreen = ({ quotes }) => {
               <div className=' '>
                 <address className='float-end'>
                   <p className='bg-success py-1 ps-2 text-light fs-4'>
-                    Quotation
+                    Invoice
                   </p>
                   <div className='float-end'>
                     <span className=''>{quotes.name}</span>{' '}
@@ -90,13 +87,9 @@ const QuotationPreviewScreen = ({ quotes }) => {
             </div>
 
             <div className='mt-3'>
-              <span className='fw-bold'>Quotation Ref: </span> {quotes._id}{' '}
-              <br />
-              <span className='fw-bold'>Quotation Date: </span>{' '}
+              <span className='fw-bold'>Invoice Ref: </span> {quotes._id} <br />
+              <span className='fw-bold'>Invoice Date: </span>{' '}
               {moment(quotes.createdAt).format('llll')} <br />
-              <span className='fw-bold'>Valid: </span>{' '}
-              {myDate && moment(myDate).format('llll')}
-              <br />
             </div>
 
             <div className='table-responsive mt-3'>
@@ -104,8 +97,8 @@ const QuotationPreviewScreen = ({ quotes }) => {
                 <thead className='table-success'>
                   <tr>
                     <th style={{ minWidth: '20rem' }}> Job Detail</th>
-                    <th> Estimated Time (day)</th>
-                    <th> Estimated Cost</th>
+                    <th> Finished Time (day)</th>
+                    <th> Amount</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -134,26 +127,18 @@ const QuotationPreviewScreen = ({ quotes }) => {
               </table>
             </div>
 
-            <p
-              className='bg-success px-2 py-1 text-light'
-              style={{ width: 'fit-content' }}
-            >
-              TERMS AND CONDITIONS:
-            </p>
-            <ol className='list-group list-group-numbered'>
-              <li className='list-group-item bg-transparent border-0 py-0'>
-                Customer will be billed after indicating acceptance of this
-                quite.
+            <ol className='list-group '>
+              <li className='list-group-item bg-transparent border-0 py-0 fw-bold'>
+                Please make payment to the following bank account:
               </li>
               <li className='list-group-item bg-transparent border-0 py-0'>
-                Payment will be due prior to delivery of service and goods
+                <span className='fw-bold'>Bank:</span> Salaam Bank <br />
+                <span className='fw-bold'>Account Number:</span> 30728881
+              </li>
+              <li className='list-group-item bg-transparent border-0 py-2'>
+                Please notify via email confirming that payment has been made.
               </li>
             </ol>
-
-            <p className='ps-3'>
-              To accept this Quotation, Please sign here and return:
-              _____________________
-            </p>
 
             <p className='text-center text-success mt-5'>
               THANK YOU FOR YOUR BUSINESS!
@@ -183,4 +168,4 @@ const QuotationPreviewScreen = ({ quotes }) => {
   )
 }
 
-export default QuotationPreviewScreen
+export default InvoicePreviewScreen
