@@ -248,7 +248,7 @@ const QuotationScreen = () => {
                 <Message variant='danger'>{errorListUsers}</Message>
               ) : (
                 <form onSubmit={handleSubmit(submitHandler)}>
-                  <div className='row gy-2'>
+                  <div className='row g-2'>
                     <div className='col-7'></div>
                     <div className='col-md-6 col-12'>
                       <label htmlFor='name'>Customer</label>
@@ -341,7 +341,7 @@ const QuotationScreen = () => {
 
                   {fields.map((item, index) => {
                     return (
-                      <div className='row py-1' key={item.id}>
+                      <div className='row py-1 gx-2' key={item.id}>
                         <div className='col-md-4 col-12'>
                           <label htmlFor='item'>Item</label>
                           <input
@@ -349,6 +349,7 @@ const QuotationScreen = () => {
                             {...register(`jobInfo.${index}.item`)}
                             className='form-control'
                             placeholder='item'
+                            required
                           />
                         </div>
                         <div className='col-md-3 col-12'>
@@ -358,6 +359,10 @@ const QuotationScreen = () => {
                             {...register(`jobInfo.${index}.estimatedCost`)}
                             className='form-control'
                             placeholder='Estimated cost ($)'
+                            required
+                            type='number'
+                            min='0'
+                            step='.01'
                           />
                         </div>
 
@@ -368,14 +373,17 @@ const QuotationScreen = () => {
                             {...register(`jobInfo.${index}.estimatedTime`)}
                             className='form-control'
                             placeholder='Estimated time (day)'
+                            required
+                            type='number'
+                            min='0'
                           />
                         </div>
                         <div className='col-md-2 col-12'>
                           <button
                             type='button'
-                            className='btn btn-danger float-end'
+                            className='btn btn-danger form-control'
                             onClick={() => remove(index)}
-                            style={{ marginTop: '1.7rem' }}
+                            style={{ marginTop: '1.5rem', padding: '0.7rem' }}
                           >
                             <FaTimesCircle className='mb-1' />
                           </button>
