@@ -115,28 +115,27 @@ const QuotationScreen = () => {
 
   useEffect(() => {
     if (
-      errorDeleteUser ||
-      errorRegisterUser ||
-      errorListUsers ||
+      errorDeleteQuotation ||
+      errorAddQuotation ||
+      errorListQuotations ||
       errorUpdateUser ||
-      successDeleteUser ||
-      successRegisterUser ||
+      successDeleteQuotation ||
+      successAddQuotation ||
       successUpdateUser
     ) {
       setTimeout(() => {
-        dispatch(resetDeleteUser())
-        dispatch(resetListUsers())
+        dispatch(resetDeleteQuotation())
         dispatch(resetUpdateUser())
-        dispatch(resetRegisterUser())
+        dispatch(resetAddQuotation())
       }, 5000)
     }
   }, [
-    errorDeleteUser,
-    errorRegisterUser,
-    errorListUsers,
+    errorDeleteQuotation,
+    errorAddQuotation,
+    errorListQuotations,
     errorUpdateUser,
-    successDeleteUser,
-    successRegisterUser,
+    successDeleteQuotation,
+    successAddQuotation,
     successUpdateUser,
     dispatch,
   ])
@@ -233,19 +232,19 @@ const QuotationScreen = () => {
               {errorUpdateUser && (
                 <Message variant='danger'>{errorUpdateUser}</Message>
               )}
-              {successRegisterUser && (
+              {successAddQuotation && (
                 <Message variant='success'>
-                  User has been Created successfully.
+                  Quotation has been created successfully.
                 </Message>
               )}
-              {errorRegisterUser && (
-                <Message variant='danger'>{errorRegisterUser}</Message>
+              {errorAddQuotation && (
+                <Message variant='danger'>{errorAddQuotation}</Message>
               )}
 
-              {loadingListUsers ? (
+              {loadingListQuotations ? (
                 <Loader />
-              ) : errorListUsers ? (
-                <Message variant='danger'>{errorListUsers}</Message>
+              ) : errorListQuotations ? (
+                <Message variant='danger'>{errorListQuotations}</Message>
               ) : (
                 <form onSubmit={handleSubmit(submitHandler)}>
                   <div className='row g-2'>
@@ -446,14 +445,18 @@ const QuotationScreen = () => {
         </button>
       </div>
 
-      {successDeleteUser && (
-        <Message variant='success'>User has been deleted successfully.</Message>
+      {successDeleteQuotation && (
+        <Message variant='success'>
+          Quotation has been deleted successfully.
+        </Message>
       )}
-      {errorDeleteUser && <Message variant='danger'>{errorDeleteUser}</Message>}
+      {errorDeleteQuotation && (
+        <Message variant='danger'>{errorDeleteQuotation}</Message>
+      )}
       {loadingListUsers ? (
         <Loader />
-      ) : errorListUsers ? (
-        <Message variant='danger'>{errorListUsers}</Message>
+      ) : errorListQuotations ? (
+        <Message variant='danger'>{errorListQuotations}</Message>
       ) : (
         <>
           <div className='d-flex justify-content-center mt-2'>
