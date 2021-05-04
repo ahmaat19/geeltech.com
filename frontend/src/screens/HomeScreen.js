@@ -16,11 +16,11 @@ const HomeScreen = ({ match }) => {
       <main className='my-5 py-5'>
         <Hero />
         <About />
-        {/* <Clients /> */}
+        <Clients />
         <Services />
         <Process />
         {/* <Works /> */}
-        <ProjectGallery />
+        {/* <ProjectGallery /> */}
         <Contact />
       </main>
     </>

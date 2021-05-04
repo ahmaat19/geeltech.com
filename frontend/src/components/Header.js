@@ -88,47 +88,54 @@ const Header = () => {
   )
 
   const guestLinks = (
-    <ul className='navbar-nav ms-auto mb-2 mb-lg-0'>
-      <li className='nav-item '>
-        <a className='nav-link  active ' aria-current='page' href='#home'>
+    <>
+      <ul className='navbar-nav ms-auto mb-2 mb-lg-0'>
+        {/* <li className='nav-item '>
+        <a className='nav-link  active ' aria-current='page' href='/#home'>
           Home
         </a>
-      </li>
-      <li className='nav-item '>
-        <a className='nav-link  active ' aria-current='page' href='#about'>
-          About
-        </a>
-      </li>
-      <li className='nav-item '>
-        <a className='nav-link  active ' aria-current='page' href='#services'>
-          Services
-        </a>
-      </li>
-      <li className='nav-item '>
-        <a className='nav-link  active ' aria-current='page' href='#process'>
+      </li> */}
+        <li className='nav-item '>
+          <a className='nav-link  active ' aria-current='page' href='/#about'>
+            About
+          </a>
+        </li>
+        <li className='nav-item '>
+          <a
+            className='nav-link  active '
+            aria-current='page'
+            href='/#services'
+          >
+            Services
+          </a>
+        </li>
+        {/* <li className='nav-item '>
+        <a className='nav-link  active ' aria-current='page' href='/#process'>
           Process
         </a>
-      </li>
-      <li className='nav-item '>
-        <a className='nav-link  active ' aria-current='page' href='#works'>
+      </li> */}
+        {/* <li className='nav-item '>
+        <a className='nav-link  active ' aria-current='page' href='/#works'>
           Works
         </a>
-      </li>
-      <li className='nav-item '>
-        <a className='nav-link  active ' aria-current='page' href='#contact'>
-          Contact Us
-        </a>
-      </li>
-      <li className='nav-item'>
-        <a
-          className='nav-link   btn btn-success rounded-pill shadow py-2'
-          aria-current='page'
-          href='mailto:info@geeltech.com'
-        >
-          <FaEnvelope className='icon-color' /> info@geeltech.com
-        </a>
-      </li>
-    </ul>
+      </li> */}
+        <li className='nav-item '>
+          <a className='nav-link  active ' aria-current='page' href='/#contact'>
+            Contact Us
+          </a>
+        </li>
+
+        <li className='nav-item'>
+          <a
+            className='nav-link   btn btn-success rounded-pill shadow py-2'
+            aria-current='page'
+            href='mailto:info@geeltech.com'
+          >
+            <FaEnvelope className='icon-color' /> info@geeltech.com
+          </a>
+        </li>
+      </ul>
+    </>
   )
 
   return (

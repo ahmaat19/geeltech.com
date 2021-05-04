@@ -19,12 +19,12 @@ const About = () => {
               We’ll help to achieve your goals and to grow business
             </p>
 
-            <button
-              type='button'
+            <a
+              href='/#contact'
               className='btn btn-success py-3 px-5 my-5 rounded-pill shadow'
             >
               LET'S TALK <FaComments />
-            </button>
+            </a>
           </div>
         </div>
 
