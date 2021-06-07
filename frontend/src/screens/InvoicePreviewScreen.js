@@ -119,7 +119,8 @@ const InvoicePreviewScreen = ({ quotes }) => {
                     <td className='bg-success text-light'>
                       $
                       {quotes.jobInfo.reduce(
-                        (acc, curr) => acc.estimatedCost + curr.estimatedCost
+                        (acc, curr) =>
+                          Number(acc.estimatedCost) + Number(curr.estimatedCost)
                       )}
                     </td>
                   </tr>

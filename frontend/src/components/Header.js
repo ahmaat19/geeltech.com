@@ -1,29 +1,27 @@
 import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
 import {
   FaCog,
   FaFileContract,
-  FaPhoneAlt,
-  FaPlusCircle,
   FaPowerOff,
-  FaSignInAlt,
   FaUser,
   FaUserCircle,
-  FaUserPlus,
   FaUsers,
   FaEnvelope,
 } from 'react-icons/fa'
-import { resetUpdateUser, logout } from '../redux/users/usersSlice'
 import logo from '../images/logo.png'
 
+import { logout } from '../api/users'
+import { useMutation } from 'react-query'
+
 const Header = () => {
-  const dispatch = useDispatch()
-  const userLogin = useSelector((state) => state.userLogin)
-  const { userInfo } = userLogin
+  const { mutateAsync } = useMutation(logout, () => {})
+
+  let userInfo = localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo'))
+    : null
 
   const logoutHandler = () => {
-    dispatch(logout())
-    dispatch(resetUpdateUser())
+    mutateAsync({})
   }
 
   const authLinks = (

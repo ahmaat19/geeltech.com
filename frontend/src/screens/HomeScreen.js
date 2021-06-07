@@ -2,13 +2,13 @@ import { useEffect } from 'react'
 import About from './About'
 import Services from './Services'
 import Process from './Process'
-import Works from './Works'
+// import Works from './Works'
 import Contact from './Contact'
 import Hero from '../components/Hero'
 import Clients from './ClentsScreen'
-import ProjectGallery from './ProjectGalleryScreen'
+// import ProjectGallery from './ProjectGalleryScreen'
 
-const HomeScreen = ({ match }) => {
+const HomeScreen = () => {
   useEffect(() => {}, [])
 
   return (

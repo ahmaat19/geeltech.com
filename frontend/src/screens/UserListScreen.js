@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from 'react'
 import Message from '../components/Message'
-import Loader from '../components/Loader'
+import Loader from 'react-loader-spinner'
 import {
   FaCheckCircle,
   FaEdit,
@@ -10,24 +9,13 @@ import {
   FaTrash,
 } from 'react-icons/fa'
 
-import {
-  resetDeleteUser,
-  resetListUsers,
-  resetUpdateUser,
-  resetRegisterUser,
-} from '../redux/users/usersSlice'
-import {
-  deleteUser,
-  listUsers,
-  updateUser,
-  registerUser,
-} from '../redux/users/usersThunk'
+import { getUsers, updateUser, deleteUser, createUser } from '../api/users'
+import { useQuery, useMutation, useQueryClient } from 'react-query'
 
 import { UnlockAccess } from '../components/UnlockAccess'
 
 import { confirmAlert } from 'react-confirm-alert'
 import { Confirm } from '../components/Confirm'
-import Pagination from '../components/Pagination'
 import { useForm } from 'react-hook-form'
 
 const UserListScreen = () => {
@@ -45,95 +33,78 @@ const UserListScreen = () => {
     },
   })
 
+  const queryClient = useQueryClient()
+
+  const { data, isLoading, isError, error } = useQuery(
+    'users',
+    () => getUsers(),
+    {
+      retry: 0,
+    }
+  )
+
+  const {
+    isLoading: isLoadingUpdateUser,
+    isError: isErrorUpdateUser,
+    error: errorUpdateUser,
+    isSuccess: isSuccessUpdateUser,
+    mutateAsync: updateUserMutateAsync,
+  } = useMutation(['updateUser'], updateUser, {
+    retry: 0,
+    onSuccess: () => {
+      reset()
+      queryClient.invalidateQueries(['users'])
+    },
+  })
+
+  const {
+    isLoading: isLoadingDeleteUser,
+    isError: isErrorDeleteUser,
+    error: errorDeleteUser,
+    isSuccess: isSuccessDeleteUser,
+    mutateAsync: deleteUserMutateAsync,
+  } = useMutation(['deleteUser'], deleteUser, {
+    retry: 0,
+    onSuccess: () => queryClient.invalidateQueries(['users']),
+  })
+
+  const {
+    isLoading: isLoadingCreateUser,
+    isError: isErrorCreateUser,
+    error: errorCreateUser,
+    isSuccess: isSuccessCreateUser,
+    mutateAsync: createUserMutateAsync,
+  } = useMutation(['createUser'], createUser, {
+    retry: 0,
+    onSuccess: () => {
+      reset()
+      queryClient.invalidateQueries(['users'])
+    },
+  })
+
   const [id, setId] = useState(null)
   const [edit, setEdit] = useState(false)
-
-  const [page, setPage] = useState(1)
-  const [limit, setLimit] = useState(30)
-
-  const dispatch = useDispatch()
-
-  const userList = useSelector((state) => state.userList)
-  const { users, loadingListUsers, errorListUsers, total, pages } = userList
-
-  const userUpdate = useSelector((state) => state.userUpdate)
-  const { loadingUpdateUser, errorUpdateUser, successUpdateUser } = userUpdate
-
-  const userDelete = useSelector((state) => state.userDelete)
-  const { successDeleteUser, errorDeleteUser } = userDelete
-
-  const userRegister = useSelector((state) => state.userRegister)
-  const {
-    loadingRegisterUser,
-    errorRegisterUser,
-    successRegisterUser,
-  } = userRegister
 
   const formCleanHandler = () => {
     setEdit(false)
     reset()
   }
 
-  useEffect(() => {
-    if (
-      errorDeleteUser ||
-      errorRegisterUser ||
-      errorListUsers ||
-      errorUpdateUser ||
-      successDeleteUser ||
-      successRegisterUser ||
-      successUpdateUser
-    ) {
-      setTimeout(() => {
-        dispatch(resetDeleteUser())
-        dispatch(resetListUsers())
-        dispatch(resetUpdateUser())
-        dispatch(resetRegisterUser())
-      }, 5000)
-    }
-  }, [
-    errorDeleteUser,
-    errorRegisterUser,
-    errorListUsers,
-    errorUpdateUser,
-    successDeleteUser,
-    successRegisterUser,
-    successUpdateUser,
-    dispatch,
-  ])
-
-  useEffect(() => {
-    dispatch(listUsers({ page, limit }))
-    if (successUpdateUser || successRegisterUser) {
-      formCleanHandler()
-    }
-    // eslint-disable-next-line
-  }, [
-    dispatch,
-    successDeleteUser,
-    successUpdateUser,
-    successRegisterUser,
-    page,
-    limit,
-  ])
-
   const deleteHandler = (id) => {
-    confirmAlert(Confirm(() => dispatch(deleteUser(id))))
+    confirmAlert(Confirm(() => deleteUserMutateAsync(id)))
   }
 
   const submitHandler = (data) => {
     edit
-      ? dispatch(
-          updateUser({
-            _id: id,
-            name: data.name,
-            email: data.email,
-            password: data.password,
-            admin: data.admin,
-            user: data.user,
-          })
-        )
-      : dispatch(registerUser(data))
+      ? updateUserMutateAsync({
+          _id: id,
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          admin: data.admin,
+          user: data.user,
+        })
+      : createUserMutateAsync(data)
   }
 
   const editHandler = (user) => {
@@ -176,27 +147,35 @@ const UserListScreen = () => {
               ></button>
             </div>
             <div className='modal-body'>
-              {successUpdateUser && (
+              {isSuccessUpdateUser && (
                 <Message variant='success'>
                   User has been updated successfully.
                 </Message>
               )}
-              {errorUpdateUser && (
+              {isErrorUpdateUser && (
                 <Message variant='danger'>{errorUpdateUser}</Message>
               )}
-              {successRegisterUser && (
+              {isSuccessCreateUser && (
                 <Message variant='success'>
                   User has been Created successfully.
                 </Message>
               )}
-              {errorRegisterUser && (
-                <Message variant='danger'>{errorRegisterUser}</Message>
+              {isErrorCreateUser && (
+                <Message variant='danger'>{errorCreateUser}</Message>
               )}
 
-              {loadingListUsers ? (
-                <Loader />
-              ) : errorListUsers ? (
-                <Message variant='danger'>{errorListUsers}</Message>
+              {isLoading ? (
+                <div className='text-center'>
+                  <Loader
+                    type='ThreeDots'
+                    color='#00BFFF'
+                    height={100}
+                    width={100}
+                    timeout={3000} //3 secs
+                  />
+                </div>
+              ) : isError ? (
+                <Message variant='danger'>{error}</Message>
               ) : (
                 <form onSubmit={handleSubmit(submitHandler)}>
                   <div className='mb-3'>
@@ -316,12 +295,10 @@ const UserListScreen = () => {
                     </button>
                     <button
                       type='submit'
-                      className='btn btn-success '
-                      disabled={
-                        loadingRegisterUser || (loadingUpdateUser && true)
-                      }
+                      className='btn btn-primary '
+                      disabled={isLoadingCreateUser || isLoadingUpdateUser}
                     >
-                      {loadingRegisterUser || loadingUpdateUser ? (
+                      {isLoadingCreateUser || isLoadingUpdateUser ? (
                         <span className='spinner-border spinner-border-sm' />
                       ) : (
                         'Submit'
@@ -338,7 +315,7 @@ const UserListScreen = () => {
       <div className='d-flex justify-content-between align-items-center'>
         <h3 className=''>Users</h3>
         <button
-          className='btn btn-success '
+          className='btn btn-primary '
           data-bs-toggle='modal'
           data-bs-target='#editUserModal'
         >
@@ -346,29 +323,29 @@ const UserListScreen = () => {
         </button>
       </div>
 
-      {successDeleteUser && (
+      {isSuccessDeleteUser && (
         <Message variant='success'>User has been deleted successfully.</Message>
       )}
-      {errorDeleteUser && <Message variant='danger'>{errorDeleteUser}</Message>}
-      {loadingListUsers ? (
-        <Loader />
-      ) : errorListUsers ? (
-        <Message variant='danger'>{errorListUsers}</Message>
+      {isErrorDeleteUser && (
+        <Message variant='danger'>{errorDeleteUser}</Message>
+      )}
+      {isLoading ? (
+        <div className='text-center'>
+          <Loader
+            type='ThreeDots'
+            color='#00BFFF'
+            height={100}
+            width={100}
+            timeout={3000} //3 secs
+          />
+        </div>
+      ) : isError ? (
+        <Message variant='danger'>{error}</Message>
       ) : (
         <>
-          <div className='d-flex justify-content-center mt-2'>
-            <Pagination
-              setPage={setPage}
-              page={page}
-              pages={pages}
-              limit={limit}
-              setLimit={setLimit}
-              total={total}
-            />
-          </div>
           <div className='table-responsive '>
             <table className='table table-sm hover bordered striped caption-top '>
-              <caption>{total} records were found</caption>
+              <caption>{data && data.length} records were found</caption>
               <thead>
                 <tr>
                   <th>ID</th>
@@ -379,8 +356,8 @@ const UserListScreen = () => {
                 </tr>
               </thead>
               <tbody>
-                {users &&
-                  users.map((user) => (
+                {data &&
+                  data.map((user) => (
                     <tr key={user._id}>
                       <td>{user._id}</td>
                       <td>{user.name}</td>
@@ -396,7 +373,7 @@ const UserListScreen = () => {
                       </td>
                       <td className='btn-group'>
                         <button
-                          className='btn btn-success btn-sm'
+                          className='btn btn-primary btn-sm'
                           onClick={() => editHandler(user)}
                           data-bs-toggle='modal'
                           data-bs-target='#editUserModal'
@@ -407,24 +384,22 @@ const UserListScreen = () => {
                         <button
                           className='btn btn-danger btn-sm'
                           onClick={() => deleteHandler(user._id)}
+                          disabled={isLoadingDeleteUser}
                         >
-                          <FaTrash className='mb-1' /> Delete
+                          {isLoadingDeleteUser ? (
+                            <span className='spinner-border spinner-border-sm' />
+                          ) : (
+                            <span>
+                              {' '}
+                              <FaTrash className='mb-1' /> Delete
+                            </span>
+                          )}
                         </button>
                       </td>
                     </tr>
                   ))}
               </tbody>
             </table>
-          </div>
-          <div className='d-flex justify-content-center'>
-            <Pagination
-              setPage={setPage}
-              page={page}
-              pages={pages}
-              limit={limit}
-              setLimit={setLimit}
-              total={total}
-            />
           </div>
         </>
       )}

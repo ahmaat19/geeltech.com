@@ -4,25 +4,38 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Routes from './components/routes/Routes'
-import { useDispatch } from 'react-redux'
 import 'animate.css'
 
-import { logout } from './redux/users/usersSlice'
+import { logout } from './api/users'
+import { useMutation, useQuery } from 'react-query'
 
 const App = () => {
-  const dispatch = useDispatch()
+  const { mutateAsync } = useMutation(logout, () => {})
+  useQuery('userInfo', () => {})
+
+  let userInfo = localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo')).token
+    : null
 
   useEffect(() => {
-    // log user out from all tabs if they log out in one tab
     window.addEventListener('storage', () => {
-      if (!localStorage.userInfo) dispatch(logout())
+      if (userInfo) mutateAsync({})
     })
-    if (localStorage.userInfo) {
-      const token = JSON.parse(localStorage.getItem('userInfo'))
-      const decoded = jwt_decode(token.token)
-      if (decoded.exp * 1000 < Date.now()) dispatch(logout())
-    }
-  }, [dispatch])
+    window.addEventListener('click', () => {
+      if (userInfo) {
+        const decoded = jwt_decode(userInfo && userInfo)
+
+        if (decoded.exp * 1000 < Date.now()) mutateAsync({})
+      }
+    })
+    window.addEventListener('focus', () => {
+      if (userInfo) {
+        const decoded = jwt_decode(userInfo && userInfo)
+        if (decoded.exp * 1000 < Date.now()) mutateAsync({})
+      }
+    })
+  }, [mutateAsync, userInfo])
+
   return (
     <Router>
       <Header />

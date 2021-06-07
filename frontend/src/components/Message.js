@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa'
+import 'animate.css'
 
 const Message = ({ variant, children }) => {
   const [alert, setAlert] = useState(true)
@@ -18,7 +19,7 @@ const Message = ({ variant, children }) => {
     alert && (
       <div
         className='position-fixed top-0 end-0 p-2 animate__animated animate__lightSpeedInRight '
-        style={{ zIndex: 9000 }}
+        style={{ zIndex: 900000 }}
       >
         <div
           className={`toast show text-${variant}`}
