@@ -5,7 +5,6 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import Routes from './components/routes/Routes'
 import 'animate.css'
-
 import { logout } from './api/users'
 import { useMutation, useQuery } from 'react-query'
 

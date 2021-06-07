@@ -325,7 +325,15 @@ const QuotationScreen = () => {
         <Message variant='danger'>{errorDeleteQuotation}</Message>
       )}
       {isLoading ? (
-        <Loader />
+        <div className='text-center'>
+          <Loader
+            type='ThreeDots'
+            color='#00BFFF'
+            height={100}
+            width={100}
+            timeout={3000} //3 secs
+          />
+        </div>
       ) : isError ? (
         <Message variant='danger'>{error}</Message>
       ) : (
