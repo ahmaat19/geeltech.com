@@ -12,9 +12,9 @@ const config = () => {
   }
 }
 
-export const getQuotation = async () => {
+export const getQuotation = async (page) => {
   try {
-    const { data } = await axios.get(`/api/quotations`, config())
+    const { data } = await axios.get(`/api/quotations?page=${page}`, config())
     return data
   } catch (error) {
     throw error.response.data.message

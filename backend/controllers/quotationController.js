@@ -2,11 +2,32 @@ import asyncHandler from 'express-async-handler'
 import QuotationModel from '../models/quotationModel.js'
 
 export const getQuotation = asyncHandler(async (req, res) => {
-  const quotes = await QuotationModel.find({})
-    .populate('user', ['name', 'email'])
-    .sort({ createdAt: -1 })
+  let query = QuotationModel.find()
 
-  res.status(200).json(quotes)
+  const page = parseInt(req.query.page) || 1
+  const pageSize = parseInt(req.query.limit) || 50
+  const skip = (page - 1) * pageSize
+  const total = await QuotationModel.countDocuments()
+
+  const pages = Math.ceil(total / pageSize)
+
+  query = query
+    .skip(skip)
+    .limit(pageSize)
+    .sort({ logDate: -1 })
+    .populate('user', ['name', 'email'])
+
+  const result = await query
+
+  res.status(200).json({
+    startIndex: skip + 1,
+    endIndex: skip + result.length,
+    count: result.length,
+    page,
+    pages,
+    total,
+    data: result,
+  })
 })
 
 export const addQuotation = asyncHandler(async (req, res) => {

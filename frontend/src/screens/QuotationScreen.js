@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Message from '../components/Message'
 import Loader from 'react-loader-spinner'
 import moment from 'moment'
@@ -9,7 +9,7 @@ import {
   FaTimesCircle,
   FaTrash,
 } from 'react-icons/fa'
-
+import Pagination from '../components/Pagination'
 import { getQuotation, postQuotation, deleteQuotation } from '../api/quotations'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 
@@ -20,6 +20,7 @@ import QuotationPreviewScreen from './QuotationPreviewScreen'
 import InvoicePreviewScreen from './InvoicePreviewScreen'
 
 const QuotationScreen = () => {
+  const [page, setPage] = useState(1)
   const {
     register,
     handleSubmit,
@@ -46,7 +47,7 @@ const QuotationScreen = () => {
 
   const { data, isLoading, isError, error } = useQuery(
     'quotations',
-    () => getQuotation(),
+    () => getQuotation(page),
     {
       retry: 0,
     }
@@ -90,8 +91,16 @@ const QuotationScreen = () => {
     postQuotationMutateAsync(data)
   }
 
+  useEffect(() => {
+    const refetch = async () => {
+      await queryClient.prefetchQuery('quotations')
+    }
+    refetch()
+  }, [page, queryClient])
+
   return (
     <div className='container'>
+      <Pagination data={data} setPage={setPage} />
       {isSuccessPostQuotation && (
         <Message variant='success'>
           Quotation has been created successfully.
@@ -351,7 +360,7 @@ const QuotationScreen = () => {
             </thead>
             <tbody>
               {data &&
-                data.map((quotation) => (
+                data.data.map((quotation) => (
                   <tr key={quotation._id}>
                     <td>{quotation._id}</td>
                     <td>{moment(quotation.createdAt).format('lll')}</td>

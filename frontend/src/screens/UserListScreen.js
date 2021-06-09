@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Message from '../components/Message'
 import Loader from 'react-loader-spinner'
 import {
@@ -8,7 +8,7 @@ import {
   FaTimesCircle,
   FaTrash,
 } from 'react-icons/fa'
-
+import Pagination from '../components/Pagination'
 import { getUsers, updateUser, deleteUser, createUser } from '../api/users'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 
@@ -19,6 +19,7 @@ import { Confirm } from '../components/Confirm'
 import { useForm } from 'react-hook-form'
 
 const UserListScreen = () => {
+  const [page, setPage] = useState(1)
   const {
     register,
     handleSubmit,
@@ -37,7 +38,7 @@ const UserListScreen = () => {
 
   const { data, isLoading, isError, error } = useQuery(
     'users',
-    () => getUsers(),
+    () => getUsers(page),
     {
       retry: 0,
     }
@@ -121,8 +122,17 @@ const UserListScreen = () => {
       )
   }
 
+  useEffect(() => {
+    const refetch = async () => {
+      await queryClient.prefetchQuery('users')
+    }
+    refetch()
+  }, [page, queryClient])
+
   return (
     <div className='container'>
+      <Pagination data={data} setPage={setPage} />
+
       <div
         className='modal fade'
         id='editUserModal'
@@ -345,7 +355,7 @@ const UserListScreen = () => {
         <>
           <div className='table-responsive '>
             <table className='table table-sm hover bordered striped caption-top '>
-              <caption>{data && data.length} records were found</caption>
+              <caption>{data && data.total} records were found</caption>
               <thead>
                 <tr>
                   <th>ID</th>
@@ -357,7 +367,7 @@ const UserListScreen = () => {
               </thead>
               <tbody>
                 {data &&
-                  data.map((user) => (
+                  data.data.map((user) => (
                     <tr key={user._id}>
                       <td>{user._id}</td>
                       <td>{user.name}</td>
